@@ -3,7 +3,7 @@
 
   <h2>Registration</h2>
 
-  <form action="/core/userInfo" method="post">
+  <form action="/core/register/userInfo" method="post">
     {% csrf_token %}
     {{form.as_p}}
   <input type="submit" value="Register" />

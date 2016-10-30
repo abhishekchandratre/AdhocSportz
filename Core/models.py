@@ -2,10 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Location(models.Model):
     country = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     region = models.CharField(max_length=200)
+
+    class Meta:
+        unique_together = ('country', 'state', 'region')
+
+    def __str__(self):
+        return self.country + ', ' + self.state + ', ' + self.region
 
 
 class UserInfo(models.Model):
@@ -49,7 +56,7 @@ class Sports(models.Model):
 
 class Events(models.Model):
     owner = models.OneToOneField(User)
-    sport = models.ManyToManyField(Sports)
+    sport = models.OneToOneField(Sports)
     name = models.CharField(max_length=80)
     desc = models.CharField(max_length=250)
     startDate = models.DateField()
@@ -61,5 +68,3 @@ class Events(models.Model):
 class EventPlayers(models.Model):
     event = models.OneToOneField(Events)
     players = models.ManyToManyField(User)
-
-

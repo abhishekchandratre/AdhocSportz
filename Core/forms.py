@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Sports, SportsType, UserInfo, UserSportsInterest
+from django.contrib.auth.forms import UserCreationForm
+from django.forms.extras.widgets import SelectDateWidget
+from .models import Sports, UserInfo, UserSportsInterest, Events, Location
 
 
 class RegistrationForm(UserCreationForm):
@@ -33,14 +34,12 @@ class LoginForm(forms.Form):
 
 
 class UserInfoForm(forms.ModelForm):
-
     class Meta:
         model = UserInfo
-        fields = ('gender','birthDate','phoneNumber','oneLinerStatus')
+        fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
 
 
 class SportsInterestForm(forms.Form):
-
     def __init__(self, *args, **kwargs):
         choices = kwargs.pop('choices')
         super(SportsInterestForm, self).__init__(*args, **kwargs)
@@ -48,7 +47,7 @@ class SportsInterestForm(forms.Form):
         for sport_type in choices:
             self.fields[sport_type] = forms.CharField(
                 label=sport_type,
-                widget=forms.TextInput(attrs={'readonly':'readonly'}),
+                widget=forms.TextInput(attrs={'readonly': 'readonly'}),
                 required=False,
             )
             for sport in choices[sport_type]:
@@ -57,11 +56,25 @@ class SportsInterestForm(forms.Form):
                     label=sport,
                 )
 
-    def save(self,choices,userInfoObjId):
+    def save(self, choices, userInfoObjId):
         for sport_type in choices:
             for sport in choices[sport_type]:
                 if (sport_type + sport) in self.data:
                     sportObj = Sports.objects.get(sportName=sport)
-                    userSportObj = UserSportsInterest(sport_id=sportObj.id,userInfo_id=userInfoObjId)
+                    userSportObj = UserSportsInterest(sport_id=sportObj.id, userInfo_id=userInfoObjId)
                     userSportObj.save()
 
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Events
+        fields = ('name', 'desc', 'sport', 'startDate', 'location', 'numberOfPlayers')
+        widgets = {'startDate': SelectDateWidget(
+        empty_label=("Choose Year", "Choose Month", "Choose Day"),
+    )}
+
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ('country', 'state', 'region')
