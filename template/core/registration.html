@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Ad Hoc Sports</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/offcanvas.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+<div class="container">
+<h2 style="color:gray;" align="center">Ad Hoc Sports Registration!!</h2>
+	<div class="row">
+		<section>
+        <div class="wizard">
+            <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
+
+                    <li role="presentation" class="active">
+                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="disabled">
+                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-knight"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <form class="form-horizontal" role="form" method="post" action="">
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="step1">
+                        <h3>Step 1</h3>
+                        <p>This is step 1</p>
+						<div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="userName" placeholder="User Name" class="form-control" autofocus required>
+                        <span class="help-block">User Name, eg: Sampath, Virat</span>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" class="form-control" autofocus required>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle Name" class="form-control" autofocus>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">I accept Terms and Conditions</input>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step2">
+                        <h3>Step 2</h3>
+                        <p>This is step 2</p>
+						<div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="userName" placeholder="User Name" class="form-control" autofocus required>
+                        <span class="help-block">User Name, eg: Sampath, Virat</span>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" class="form-control" autofocus required>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step3">
+                        <h3>Step 3</h3>
+                        <p>This is step 3</p>
+						<div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="userName" placeholder="User Name" class="form-control" autofocus required>
+                        <span class="help-block">User Name, eg: Sampath, Virat</span>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" class="form-control" autofocus required>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                            <li><button type="button" class="btn btn-default next-step">Skip</button></li>
+                            <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="complete">
+                        <h3>Complete</h3>
+                        <p>You have successfully completed all steps.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+   </div>
+</div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/offcanvas.js"></script>
+  </body>
+  </html>
