@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
-from .models import SportsType, Sports, UserInfo, Events
+from .models import SportsType, Sports, UserInfo, Events, Location
 from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer
 
 
@@ -147,7 +147,10 @@ def eventCreate(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            form.save()
+            event = form.save(commit=False)
+            event.location = Location.objects.get_or_create(country='India',state='MH',region='Pune')
+            event.user = request.User
+            event.save()
             return HttpResponseRedirect('core/')
 
     else:

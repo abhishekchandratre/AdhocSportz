@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 from .models import Sports, UserInfo, Events, Location
+from django.forms import extras
 
 
 class RegistrationForm(UserCreationForm):
@@ -66,17 +67,25 @@ class SportsInterestForm(forms.Form):
                 if (sport_type + sport) in self.data:
                     sportObj = Sports.objects.get(sportName=sport)
                     userInfoObj.sports.add(sportObj)
-        print(userInfoObj)
         userInfoObj.save()
 
 
 class EventForm(forms.ModelForm):
     class Meta:
         model = Events
-        fields = ('name', 'desc', 'sport', 'startDate', 'location', 'numberOfPlayers')
+        fields = ('name', 'desc', 'sport', 'startDate', 'numberOfPlayers')
         widgets = {'startDate': SelectDateWidget(
             empty_label=("Choose Year", "Choose Month", "Choose Day"),
         )}
+
+    def save(self,commit=True):
+        event = super(EventForm, self).save(commit=False)
+        if commit:
+            event.save()
+        return event
+
+
+
 
 
 class LocationForm(forms.ModelForm):
