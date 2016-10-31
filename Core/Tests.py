@@ -29,8 +29,3 @@ class TestRegistration(TestCase):
   self.assertTrue(user.phoneNumber == '9440053016')
   self.assertTrue(user.oneLinerStatus == 'west')
 
-  #def TestLogin(self):
-
-
-
-
