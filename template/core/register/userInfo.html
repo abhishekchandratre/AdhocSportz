@@ -6,8 +6,20 @@
   <form action="/core/register/userInfo" method="post">
     {% csrf_token %}
     {{form.as_p}}
-  <input type="submit" value="Register" />
+      <p>select <b>Location</b> depending on Country, State and City</p>
+    <select name="country" class="countries" id="countryId">
+<option value="">Select Country</option>
+</select>
+<select name="state" class="states" id="stateId">
+<option value="">Select State</option>
+</select>
+<select name="city" class="cities" id="cityId">
+<option value="">Select City</option>
+</select>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://iamrohit.in/lab/js/location.js"></script>
+
+<br><br></btr><input type="submit" value="Register" />
 
   </form>
-
 {% endblock %}
