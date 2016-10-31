@@ -47,11 +47,6 @@ class SportsInterestForm(forms.Form):
         super(SportsInterestForm, self).__init__(*args, **kwargs)
 
         for sport_type in choices:
-            self.fields[sport_type] = forms.CharField(
-                label=sport_type,
-                widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-                required=False,
-            )
             for sport in choices[sport_type]:
                 self.fields[sport_type + sport] = forms.BooleanField(
                     required=False,

@@ -38,7 +38,7 @@ class UserInfo(models.Model):
     oneLinerStatus = models.CharField(max_length=140)
     location = models.OneToOneField(Location, null=True)
     #profilePicture = models.ImageField(null=True)
-    sports = models.ManyToManyField(Sports,null=True)
+    sports = models.ManyToManyField(Sports)
 
     def __str__(self):
         return self.user.first_name + self.user.last_name + str(self.sports.values())

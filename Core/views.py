@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location
-from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer
+from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer
 
 
 # Create your views here.
@@ -23,7 +23,7 @@ def test(request):
     pass
 
 
-#@login_required
+# @login_required
 def registerBasic(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -126,7 +126,10 @@ def login_user(request):
 @api_view(['GET'])
 def eventCollection(request):
     if request.method == 'GET':
-        events = Events.objects.all()
+        try:
+            events = Events.objects.all()
+        except Events.DoesNotExist:
+            return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
@@ -137,9 +140,8 @@ def eventDetails(request, pk):
         event = Events.objects.get(id=pk)
     except Events.DoesNotExist:
         return HttpResponse(status=404)
-
     if request.method == 'GET':
-        serializer = EventSerializer(event)
+        serializer = EventInfoSerializer(event)
         return Response(serializer.data)
 
 
@@ -150,18 +152,18 @@ def eventCreate(request):
         if form.is_valid():
             event = form.save(commit=False)
             event.owner = request.user
-            location = Location.objects.get_or_create(country='India',state='MH',region='Pune')
-            location = Location.objects.get(country='India',state='MH',region='Pune')
+            location = Location.objects.get_or_create(country='India', state='MH', region='Pune')
+            location = Location.objects.get(country='India', state='MH', region='Pune')
             event.location = location
             event.save()
-            return HttpResponseRedirect('core/')
+            return HttpResponseRedirect('/core/')
 
     else:
         form = EventForm()
     context = dict()
     context.update(csrf(request))
     context['form'] = form
-    return render_to_response('core/register/eventCreate.html',context)
+    return render_to_response('core/register/eventCreate.html', context)
 
 
 @api_view(['GET'])
@@ -171,14 +173,18 @@ def userCollection(request):
         serialize = UserSerializer(users, many=True)
         return Response(serialize.data)
 
+
 @api_view(['GET'])
-def userDetails(request,pk):
+def userDetails(request, pk):
     if request.method == 'GET':
-        user = User.objects.get(id=pk)
-        userObj = UserInfo.objects.get(user=user)
-        print(userObj)
+        try:
+            user = User.objects.get(id=pk)
+            userObj = UserInfo.objects.get(user=user)
+        except UserInfo.DoesNotExist:
+            return HttpResponse(status=404)
         serialize = UserInfoSerializer(userObj)
         return Response(serialize.data)
+
 
 @api_view(['GET'])
 def sportCollection(request):
