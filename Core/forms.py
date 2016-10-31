@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
-from .models import Sports, UserInfo, UserSportsInterest, Events, Location
+from .models import Sports, UserInfo, Events, Location
 
 
 class RegistrationForm(UserCreationForm):
@@ -37,6 +37,9 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
         fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
+        widgets = {'birthDate': SelectDateWidget(
+            empty_label=("Choose Year", "Choose Month", "Choose Day"),
+        )}
 
 
 class SportsInterestForm(forms.Form):
@@ -56,13 +59,15 @@ class SportsInterestForm(forms.Form):
                     label=sport,
                 )
 
-    def save(self, choices, userInfoObjId):
+    def save(self, choices, userInfoObj):
+        userInfoObj.save()
         for sport_type in choices:
             for sport in choices[sport_type]:
                 if (sport_type + sport) in self.data:
                     sportObj = Sports.objects.get(sportName=sport)
-                    userSportObj = UserSportsInterest(sport_id=sportObj.id, userInfo_id=userInfoObjId)
-                    userSportObj.save()
+                    userInfoObj.sports.add(sportObj)
+        print(userInfoObj)
+        userInfoObj.save()
 
 
 class EventForm(forms.ModelForm):
@@ -70,8 +75,8 @@ class EventForm(forms.ModelForm):
         model = Events
         fields = ('name', 'desc', 'sport', 'startDate', 'location', 'numberOfPlayers')
         widgets = {'startDate': SelectDateWidget(
-        empty_label=("Choose Year", "Choose Month", "Choose Day"),
-    )}
+            empty_label=("Choose Year", "Choose Month", "Choose Day"),
+        )}
 
 
 class LocationForm(forms.ModelForm):

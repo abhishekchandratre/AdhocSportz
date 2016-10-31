@@ -15,6 +15,14 @@ class Location(models.Model):
         return self.country + ', ' + self.state + ', ' + self.region
 
 
+class Sports(models.Model):
+    sportName = models.CharField(max_length=140)
+    sportType = models.ForeignKey('SportsType')
+
+    def __str__(self):
+        return self.sportName
+
+
 class UserInfo(models.Model):
     user = models.OneToOneField(User)
     GENDER_CHOICE = (
@@ -30,15 +38,10 @@ class UserInfo(models.Model):
     oneLinerStatus = models.CharField(max_length=140)
     location = models.OneToOneField(Location, null=True)
     profilePicture = models.ImageField()
+    sports = models.ManyToManyField(Sports,null=True)
 
     def __str__(self):
-        return self.user.first_name + self.user.last_name
-
-
-class UserSportsInterest(models.Model):
-    userInfo = models.ForeignKey('UserInfo')
-    # Todo change this to manytomany field
-    sport = models.ForeignKey('Sports')
+        return self.user.first_name + self.user.last_name + str(self.sports.values())
 
 
 class SportsType(models.Model):
@@ -46,14 +49,6 @@ class SportsType(models.Model):
 
     def __str__(self):
         return self.categoryName
-
-
-class Sports(models.Model):
-    sportName = models.CharField(max_length=140)
-    sportType = models.ForeignKey('SportsType')
-
-    def __str__(self):
-        return self.sportName
 
 
 class Events(models.Model):
@@ -69,4 +64,4 @@ class Events(models.Model):
 
 class EventPlayers(models.Model):
     event = models.OneToOneField(Events)
-    players = models.ManyToManyField(User)
+    players = models.ForeignKey(User)

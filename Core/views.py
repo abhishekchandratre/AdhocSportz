@@ -70,7 +70,7 @@ def registersSportsInterest(request):
         if form.is_valid():
             userInfoObj = UserInfo.objects.get(user=request.user)
             print(userInfoObj.birthDate)
-            form.save(choices, userInfoObj.id)
+            form.save(choices, userInfoObj)
             return HttpResponseRedirect('core/')
 
     else:
