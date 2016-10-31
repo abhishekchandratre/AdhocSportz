@@ -4,11 +4,6 @@ from .models import Events, UserInfo, Location, Sports, SportsType
 
 
 
-class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Events
-        fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
-
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,8 +22,10 @@ class SportTypeSerializer(serializers.ModelSerializer):
         model = SportsType
         fields = ('categoryName',)
 
+
 class SportsSerializer(serializers.ModelSerializer):
     sportType = SportTypeSerializer()
+
     class Meta:
         model = Sports
         fields = ('sportName', 'sportType')
@@ -41,5 +38,19 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserInfo
-        fields = ('user','gender','location', 'phoneNumber','oneLinerStatus','sports')
+        fields = ('user', 'gender', 'location', 'phoneNumber', 'oneLinerStatus', 'sports')
 
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Events
+        fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
+
+
+class EventInfoSerializer(serializers.ModelSerializer):
+    owner = UserSerializer()
+    location = LocationSerializer()
+
+    class Meta:
+        model = Events
+        fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
