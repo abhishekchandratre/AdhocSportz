@@ -1,25 +1,24 @@
 {% extends "base.html" %}
+{% load bootstrap_toolkit %}
 {% block content %}
 
-  <h2>Registration</h2>
+  <h2 align="center">Registration</h2>
 
-  <form action="/core/register/userInfo" method="post">
+  <form class="form-horizontal" role="form" action="/core/userInfo" method="post" id="basic_info">
     {% csrf_token %}
-    {{form.as_p}}
-      <p>select <b>Location</b> depending on Country, State and City</p>
-    <select name="country" class="countries" id="countryId">
-<option value="">Select Country</option>
-</select>
-<select name="state" class="states" id="stateId">
-<option value="">Select State</option>
-</select>
-<select name="city" class="cities" id="cityId">
-<option value="">Select City</option>
-</select>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://iamrohit.in/lab/js/location.js"></script>
+      <h3>Step 2</h3>
+      <div class="form-group">
+           <div class="col-sm-9 col-sm-offset-3">
 
-<br><br></btr><input type="submit" value="Register" />
+    {{form|as_bootstrap}}
+                        </div>
+<div class="col-sm-9 col-sm-offset-6">
+          <button type="submit" class="btn btn-primary next-step">Save and continue</button>
+               </div>
+               </div>
+          </div>
+
 
   </form>
+
 {% endblock %}

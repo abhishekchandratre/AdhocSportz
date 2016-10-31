@@ -28,6 +28,7 @@ def registerBasic(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            print("form is valid")
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
