@@ -13,7 +13,7 @@ from .serializer import EventSerializer, UserSerializer, UserInfoSerializer
 
 
 # Create your views here.
-# @login_required
+@login_required
 def index(request):
     token = {}
     return render_to_response("core/index.html", token)
@@ -51,7 +51,7 @@ def registerUserInfo(request):
         if form.is_valid():
             userInfoObj = form.save(commit=False)
             userInfoObj.user = request.user
-            # userInfoObj.save()
+            userInfoObj.save()
             return HttpResponseRedirect('/core/register/sportsInterest')
 
     else:
