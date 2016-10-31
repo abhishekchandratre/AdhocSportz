@@ -1,18 +1,19 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm
+from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events
-from .serializer import EventSerializer
+from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer
 
 
 # Create your views here.
-# @login_required
+@login_required
 def index(request):
     token = {}
     return render_to_response("core/index.html", token)
@@ -22,31 +23,37 @@ def test(request):
     pass
 
 
-def register(request):
+#@login_required
+def registerBasic(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             print("form is valid")
             form.save()
-            return HttpResponseRedirect('core/register/complete')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+            return HttpResponseRedirect('core/register/userInfo')
 
     else:
         form = RegistrationForm()
     token = {}
     token.update(csrf(request))
     token['form'] = form
-    return render_to_response('core/register/register.html', token)
+    return render_to_response('core/register/basic.html', token)
 
 
 @login_required
-def userInfo(request):
+def registerUserInfo(request):
     if request.method == 'POST':
         form = UserInfoForm(request.POST)
         if form.is_valid():
             userInfoObj = form.save(commit=False)
             userInfoObj.user = request.user
             userInfoObj.save()
-            return HttpResponseRedirect('core/')
+            return HttpResponseRedirect('/core/register/sportsInterest')
 
     else:
         form = UserInfoForm()
@@ -57,15 +64,15 @@ def userInfo(request):
 
 
 @login_required
-def sportsInterest(request):
+def registersSportsInterest(request):
     if request.method == 'POST':
         choices = getSportChoices()
         form = SportsInterestForm(request.POST, choices=choices)
         if form.is_valid():
             userInfoObj = UserInfo.objects.get(user=request.user)
             print(userInfoObj.birthDate)
-            form.save(choices, userInfoObj.id)
-            return HttpResponseRedirect('core/')
+            form.save(choices, userInfoObj)
+            return HttpResponseRedirect('/core/')
 
     else:
         choices = getSportChoices()
@@ -117,7 +124,7 @@ def login_user(request):
 
 
 @api_view(['GET'])
-def event_collection(request):
+def eventCollection(request):
     if request.method == 'GET':
         events = Events.objects.all()
         serializer = EventSerializer(events, many=True)
@@ -125,7 +132,7 @@ def event_collection(request):
 
 
 @api_view(['GET'])
-def event_element(request, pk):
+def eventDetails(request, pk):
     try:
         event = Events.objects.get(id=pk)
     except Events.DoesNotExist:
@@ -134,3 +141,43 @@ def event_element(request, pk):
     if request.method == 'GET':
         serializer = EventSerializer(event)
         return Response(serializer.data)
+
+
+@login_required
+def eventCreate(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('core/')
+
+    else:
+        form = EventForm()
+    context = dict()
+    context.update(csrf(request))
+    context['form'] = form
+    return render_to_response('core/register/eventCreate.html',context)
+
+
+@api_view(['GET'])
+def userCollection(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serialize = UserSerializer(users, many=True)
+        return Response(serialize.data)
+
+@api_view(['GET'])
+def userDetails(request,pk):
+    if request.method == 'GET':
+        user = User.objects.get(id=pk)
+        userObj = UserInfo.objects.get(user=user)
+        print(userObj)
+        serialize = UserInfoSerializer(userObj)
+        return Response(serialize.data)
+
+@api_view(['GET'])
+def sportCollection(request):
+    if request.method == 'GET':
+        sports = Sports.objects.all()
+        serialize = SportsSerializer(sports, many=True)
+        return Response(serialize.data)
