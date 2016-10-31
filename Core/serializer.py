@@ -42,6 +42,8 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    owner = UserSerializer()
+    location = LocationSerializer()
     class Meta:
         model = Events
         fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
