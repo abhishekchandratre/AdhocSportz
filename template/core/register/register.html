@@ -1,12 +1,33 @@
 {% extends "base.html" %}
+{% load bootstrap_toolkit %}
 {% block content %}
 
-  <h2>Registration</h2>
+  <h2 align="center">Registration</h2>
 
-  <form action="/core/register" method="post">
+  <form class="form-horizontal" role="form" action="/core/register" method="post" id="user_details">
     {% csrf_token %}
-    {{form.as_p}}
-  <input type="submit" value="Register" />
+      <h3 align="center">Step 1</h3>
+      <div class="form-group">
+           <div class="col-sm-9 col-sm-offset-3">
+
+    {{form|as_bootstrap}}
+
+</div>
+<div class="col-sm-9 col-sm-offset-6">
+          <input type="submit" class="btn btn-primary next-step">Save and continue</input>
+    {% if form.subject.errors %}
+    <ol>
+    {% for error in form.subject.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+    {% endfor %}
+    </ol>
+{% endif %}
+
+     {{ form.errors }}
+  {{ form.non_field_errors }}
+
+               </div>
+               </div>
 
   </form>
 

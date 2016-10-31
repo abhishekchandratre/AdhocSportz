@@ -26,6 +26,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            print("form is valid")
             form.save()
             return HttpResponseRedirect('core/register/complete')
 

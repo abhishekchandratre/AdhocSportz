@@ -1,12 +1,23 @@
 {% extends "base.html" %}
+{% load bootstrap_toolkit %}
 {% block content %}
 
-  <h2>Registration</h2>
+  <h2 align="center">Registration</h2>
 
-  <form action="/core/sportsInterest" method="post">
+  <form class="form-horizontal" role="form" action="/core/sportsInterest" method="post" id="sports_interest'>
     {% csrf_token %}
-    {{form.as_p}}
-  <input type="submit" value="Register" />
+      <h3 align="center">Step 3</h3>
+      <div class="form-group">
+           <div class="col-sm-9 col-sm-offset-3">
+
+    {{form|as_bootstrap}}
+</div>
+<div class="col-sm-9 col-sm-offset-6">
+          <button type="submit" class="btn btn-primary next-step">Save and continue</button>
+               </div>
+               </div>
+          </div>
+
 
   </form>
 
