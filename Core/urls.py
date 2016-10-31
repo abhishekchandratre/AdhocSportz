@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'accounts/complete$', views.registration_complete, name='register_complete'),
     url(r'accounts/login$', views.login_user, name='login'),
     url(r'accounts/logout$', views.logout_user, name='login'),
+    url(r'api/sports/$',views.sportCollection,name='sportCollection'),
     url(r'api/user/$',views.userCollection,name='userCollection'),
     url(r'api/user/(?P<pk>[0-9]+)/$',views.userDetails,name='userCollection'),
 ]

@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events
-from .serializer import EventSerializer, UserSerializer, UserInfoSerializer
+from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer
 
 
 # Create your views here.
@@ -71,7 +71,7 @@ def registersSportsInterest(request):
             userInfoObj = UserInfo.objects.get(user=request.user)
             print(userInfoObj.birthDate)
             form.save(choices, userInfoObj)
-            return HttpResponseRedirect('core/')
+            return HttpResponseRedirect('/core/')
 
     else:
         choices = getSportChoices()
@@ -174,3 +174,9 @@ def userDetails(request,pk):
         serialize = UserInfoSerializer(userObj)
         return Response(serialize.data)
 
+@api_view(['GET'])
+def sportCollection(request):
+    if request.method == 'GET':
+        sports = Sports.objects.all()
+        serialize = SportsSerializer(sports, many=True)
+        return Response(serialize.data)

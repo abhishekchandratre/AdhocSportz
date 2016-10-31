@@ -37,7 +37,7 @@ class UserInfo(models.Model):
     phoneNumber = models.CharField(validators=[phoneRegex], blank=True,max_length=16)
     oneLinerStatus = models.CharField(max_length=140)
     location = models.OneToOneField(Location, null=True)
-    profilePicture = models.ImageField()
+    #profilePicture = models.ImageField(null=True)
     sports = models.ManyToManyField(Sports,null=True)
 
     def __str__(self):
@@ -59,7 +59,7 @@ class Events(models.Model):
     startDate = models.DateField()
     location = models.OneToOneField(Location)
     numberOfPlayers = models.IntegerField(default=0)
-    EventPicture = models.ImageField()
+    #EventPicture = models.ImageField(null=True)
 
 
 class EventPlayers(models.Model):
