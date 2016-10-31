@@ -148,8 +148,10 @@ def eventCreate(request):
         form = EventForm(request.POST)
         if form.is_valid():
             event = form.save(commit=False)
-            event.location = Location.objects.get_or_create(country='India',state='MH',region='Pune')
-            event.user = request.User
+            event.owner = request.user
+            location = Location.objects.get_or_create(country='India',state='MH',region='Pune')
+            location = Location.objects.get(country='India',state='MH',region='Pune')
+            event.location = location
             event.save()
             return HttpResponseRedirect('core/')
 
