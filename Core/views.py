@@ -35,7 +35,7 @@ def registerBasic(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-            return HttpResponseRedirect('core/register/userInfo')
+            return HttpResponseRedirect('/core/register/userInfo')
 
     else:
         form = RegistrationForm()
@@ -97,12 +97,17 @@ def getSportChoices():
 
 
 def registration_complete(request):
+    events_dict = {}
+
     return render_to_response('core/register/registration_complete.html')
+
+def homePage(request):
+    return HttpResponseRedirect('/core/')
 
 
 def logout_user(request):
     logout(request)
-
+    return render_to_response('core/register/logout.html')
 
 def login_user(request):
     if request.method == 'POST':
@@ -114,7 +119,7 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('core/register/complete')
+                    return HttpResponseRedirect('/core/')
 
     form = LoginForm()
     context = {}
@@ -152,7 +157,7 @@ def eventCreate(request):
             event.location = Location.objects.get_or_create(country='India',state='MH',region='Pune')
             event.user = request.User
             event.save()
-            return HttpResponseRedirect('core/')
+            return HttpResponseRedirect('/core/')
 
     else:
         form = EventForm()
@@ -160,6 +165,14 @@ def eventCreate(request):
     context.update(csrf(request))
     context['form'] = form
     return render_to_response('core/register/eventCreate.html',context)
+
+
+def profileView(request):
+    if request.method == 'GET':
+        token = {}
+        token = dict()
+        token['id'] = request.user.id
+        return render_to_response("core/userProfile.html", token)
 
 
 @api_view(['GET'])
