@@ -84,6 +84,7 @@ def registersSportsInterest(request):
             userInfoObj = UserInfo.objects.get(user=request.user)
             print(userInfoObj.birthDate)
             form.save(choices, userInfoObj)
+            request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
             return HttpResponseRedirect('/core/')
 
     else:
