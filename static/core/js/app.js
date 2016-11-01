@@ -20,6 +20,7 @@ sportsApp.config([
 sportsApp.controller('userControl',['$scope','$http', '$attrs',
     function userControl ($scope,$http,$attrs) {
         var userID = $attrs.something;
+        alert(userID);
         $http.get('/core/api/user/' + userID).success(function(data) {
             $scope.userDetail = data;
         });
@@ -30,6 +31,14 @@ sportsApp.controller('eventControl',['$scope','$http',
     function eventControl ($scope,$http) {
         $http.get('/core/api/event/').success(function(data) {
             $scope.events = data;
+        });
+    }
+    ]);
+
+sportsApp.controller('eventView',['$scope','$http',
+    function eventView ($scope,$http) {
+        $http.get('/core/api/myevent/').success(function(data) {
+            $scope.myEvents = data;
         });
     }
     ]);

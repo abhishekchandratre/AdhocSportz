@@ -134,8 +134,9 @@ def login_user(request):
 @api_view(['GET'])
 def myEventCollection(request):
     if request.method == 'GET':
+        print(Events.objects.filter(owner=request.user))
         try:
-            events = Events.objects.get(owner_id=request.user.id)
+            events = Events.objects.filter(owner_id=request.user.id).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
