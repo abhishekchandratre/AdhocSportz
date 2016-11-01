@@ -120,7 +120,9 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/core/')
+                    request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
+                    context = {'request': request}
+                    return render_to_response('core/index.html', context)
 
     form = LoginForm()
     context = {}
@@ -133,8 +135,7 @@ def login_user(request):
 def myEventCollection(request):
     if request.method == 'GET':
         try:
-            #events = Events.objects.get(owner_id=request.user.id)
-            events = Events.objects.get(owner_id=2)
+            events = Events.objects.get(owner_id=request.user.id)
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)

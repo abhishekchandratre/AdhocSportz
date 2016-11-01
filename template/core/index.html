@@ -7,7 +7,7 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
           </p>
             <div class="jumbotron">
-            <h1>Hello, User!</h1>
+            <h1>Hello, {{ request.session.fullname }}!</h1>
       <p>Coming together is the beginning. Staying together is progress. Working together is success</p>
           </div>
           <div class="row">
