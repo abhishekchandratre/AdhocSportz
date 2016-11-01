@@ -36,7 +36,7 @@ class UserInfo(models.Model):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phoneNumber = models.CharField(validators=[phoneRegex], blank=True,max_length=16)
     oneLinerStatus = models.CharField(max_length=140)
-    location = models.OneToOneField(Location, null=True)
+    location = models.ForeignKey(Location, null=True)
     #profilePicture = models.ImageField(null=True)
     sports = models.ManyToManyField(Sports)
 
@@ -58,7 +58,7 @@ class Events(models.Model):
     desc = models.CharField(max_length=250)
     startDate = models.DateField()
     location = models.ForeignKey(Location)
-    numberOfPlayers = models.IntegerField(default=0)
+    numberOfPlayers = models.IntegerField(default=1)
     #EventPicture = models.ImageField(null=True)
 
 

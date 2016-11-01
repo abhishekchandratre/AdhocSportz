@@ -26,10 +26,11 @@ class RegistrationForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=250)
+    username = forms.CharField(max_length=250, widget=forms.TextInput(attrs={'placeholder': 'Username'}),
+    )
     password = forms.CharField(
         label='Password',
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
         strip=False,
     )
 
@@ -38,7 +39,7 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
         fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
-        widgets = {'birthDate': extras.SelectDateWidget(years=range(1920, 2017))}
+        widgets = {'birthDate': extras.SelectDateWidget(years=range(1920, 2016))}
 
 
 class SportsInterestForm(forms.Form):
@@ -67,7 +68,7 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Events
         fields = ('name', 'desc', 'sport', 'startDate', 'numberOfPlayers')
-        widgets = {'startDate': extras.SelectDateWidget(years=range(1920, 2017))}
+        widgets = {'startDate': extras.SelectDateWidget(years=range(2016, 2020))}
 
     def save(self,commit=True):
         event = super(EventForm, self).save(commit=False)

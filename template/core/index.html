@@ -7,16 +7,16 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
           </p>
             <div class="jumbotron">
-            <h1>Hello, User!</h1>
+            <h1>Hello, {{ request.session.fullname }}!</h1>
       <p>Coming together is the beginning. Staying together is progress. Working together is success</p>
           </div>
           <div class="row">
             <div class="col-xs-6 col-lg-4" ng-repeat="event in events">
               <h2>{[{ event.name }]}</h2>
               <p>{[{ event.desc }]}</p>
-			  <p><a class="btn btn-info" data-toggle="modal" data-target="#myModal" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Event &raquo;</a></p>
+			  <p><a class="btn btn-info" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Event &raquo;</a></p>
 			  <!-- Modal -->
-				<div class="modal fade text-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal fade text-center" id="myModal{[{ event.id }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 					<div class="modal-header">

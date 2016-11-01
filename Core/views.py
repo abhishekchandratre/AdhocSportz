@@ -53,6 +53,17 @@ def registerUserInfo(request):
         if form.is_valid():
             userInfoObj = form.save(commit=False)
             userInfoObj.user = request.user
+            location = Location.objects.get_or_create(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            location = Location.objects.get(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            userInfoObj.location = location
             userInfoObj.save()
             return HttpResponseRedirect('/core/register/sportsInterest')
 
@@ -73,6 +84,7 @@ def registersSportsInterest(request):
             userInfoObj = UserInfo.objects.get(user=request.user)
             print(userInfoObj.birthDate)
             form.save(choices, userInfoObj)
+            request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
             return HttpResponseRedirect('/core/')
 
     else:
@@ -120,7 +132,9 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/core/')
+                    request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
+                    context = {'request': request}
+                    return render_to_response('core/index.html', context)
 
     form = LoginForm()
     context = {}
@@ -132,9 +146,9 @@ def login_user(request):
 @api_view(['GET'])
 def myEventCollection(request):
     if request.method == 'GET':
+        print(Events.objects.filter(owner=request.user))
         try:
-            #events = Events.objects.get(owner_id=request.user.id)
-            events = Events.objects.get(owner_id=2)
+            events = Events.objects.filter(owner_id=request.user.id).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
@@ -169,8 +183,16 @@ def eventCreate(request):
         if form.is_valid():
             event = form.save(commit=False)
             event.owner = request.user
-            location = Location.objects.get_or_create(country='India', state='MH', region='Pune')
-            location = Location.objects.get(country='India', state='MH', region='Pune')
+            location = Location.objects.get_or_create(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            location = Location.objects.get(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
             event.location = location
             event.save()
             return HttpResponseRedirect('/core/')

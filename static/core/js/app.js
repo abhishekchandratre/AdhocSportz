@@ -33,3 +33,11 @@ sportsApp.controller('eventControl',['$scope','$http',
         });
     }
     ]);
+
+sportsApp.controller('eventView',['$scope','$http',
+    function eventView ($scope,$http) {
+        $http.get('/core/api/myevent/').success(function(data) {
+            $scope.myEvents = data;
+        });
+    }
+    ]);
