@@ -107,7 +107,7 @@ def homePage(request):
 
 def logout_user(request):
     logout(request)
-    return render_to_response('core/register/logout.html')
+    return HttpResponseRedirect('/core/')
 
 def login_user(request):
     if request.method == 'POST':
@@ -170,12 +170,23 @@ def eventCreate(request):
     context['form'] = form
     return render_to_response('core/register/eventCreate.html', context)
 
+@login_required
+def eventView(request):
+    if request.method == 'GET':
+        token = {}
+        token = dict()
+        token['id'] = request.user.id
+        print(request.user.id)
+        return render_to_response("core/register/eventView.html", token)
 
+
+@login_required
 def profileView(request):
     if request.method == 'GET':
         token = {}
         token = dict()
         token['id'] = request.user.id
+        print(request.user.id)
         return render_to_response("core/userProfile.html", token)
 
 

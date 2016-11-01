@@ -30,6 +30,7 @@
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
   </head>
   <body ng-app="sportsApp">
@@ -51,8 +52,8 @@
 			<li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="core/event_Create.html">Create Event</a></li>
-            <li><a href="core/event">View Events</a></li>
+            <li><a href="core/register/eventCreate">Create Event</a></li>
+            <li><a href="core/register/eventView">View Events</a></li>
           </ul>
         </li>
 
@@ -66,10 +67,6 @@
     </nav><!-- /.navbar -->
 	{% block content %}
 	{% endblock content %}
-      <footer>
-        <p>&copy; Ad Hoc Sports, Inc.</p>
-      </footer>
-
     </div><!--/.container-->
 
 

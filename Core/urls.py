@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'register/sportsInterest$', views.registersSportsInterest, name='sportInterest'),
     url(r'register/userInfo$', views.registerUserInfo, name='userInfo'),
     url(r'register/eventCreate$', views.eventCreate, name='eventCreate'),
+    url(r'register/eventView$', views.eventView, name='eventView'),
     url(r'accounts/complete$', views.registration_complete, name='register_complete'),
     url(r'login/complete$', views.homePage, name='homepage'),
     url(r'accounts/login$', views.login_user, name='login'),
