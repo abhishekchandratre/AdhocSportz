@@ -53,6 +53,17 @@ def registerUserInfo(request):
         if form.is_valid():
             userInfoObj = form.save(commit=False)
             userInfoObj.user = request.user
+            location = Location.objects.get_or_create(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            location = Location.objects.get(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            userInfoObj.location = location
             userInfoObj.save()
             return HttpResponseRedirect('/core/register/sportsInterest')
 
@@ -171,8 +182,16 @@ def eventCreate(request):
         if form.is_valid():
             event = form.save(commit=False)
             event.owner = request.user
-            location = Location.objects.get_or_create(country='India', state='MH', region='Pune')
-            location = Location.objects.get(country='India', state='MH', region='Pune')
+            location = Location.objects.get_or_create(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
+            location = Location.objects.get(
+                country=request.POST['country'],
+                state=request.POST['state'],
+                region=request.POST['city']
+            )
             event.location = location
             event.save()
             return HttpResponseRedirect('/core/')
