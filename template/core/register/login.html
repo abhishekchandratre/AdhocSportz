@@ -40,12 +40,13 @@
           <form action="/core/accounts/login" class="navbar-form navbar-right" role="form" method="post">
               {% csrf_token %}
             <div class="form-group">
-                {{form}}</div>
-            <input type="submit" class="btn btn-success">Sign in</input>
-              <a href="/core/register/basic" class="btn btn-default">Sign up</a>
-
-          
-          </form>
+                {{form.username}}
+                password
+                {{ form.password }}
+            </div>
+            <input style="padding-left:20px" type="submit" class="btn btn-success" value="Sign in">
+              <a href="/core/register/basic" class="btn btn-success">Sign up</a>
+</form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

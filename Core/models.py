@@ -52,12 +52,12 @@ class SportsType(models.Model):
 
 
 class Events(models.Model):
-    owner = models.OneToOneField(User)
-    sport = models.OneToOneField(Sports)
+    owner = models.ForeignKey(User)
+    sport = models.ForeignKey(Sports)
     name = models.CharField(max_length=80)
     desc = models.CharField(max_length=250)
     startDate = models.DateField()
-    location = models.OneToOneField(Location)
+    location = models.ForeignKey(Location)
     numberOfPlayers = models.IntegerField(default=0)
     #EventPicture = models.ImageField(null=True)
 

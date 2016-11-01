@@ -4,16 +4,35 @@
 
   <h2 align="center">Registration</h2>
 
-  <form class="form-horizontal" role="form" action="/core/userInfo" method="post" id="basic_info">
+  <form class="form-horizontal" role="form" action="/core/register/userInfo" method="post" id="basic_info">
     {% csrf_token %}
       <h3>Step 2</h3>
       <div class="form-group">
            <div class="col-sm-9 col-sm-offset-3">
 
     {{form|as_bootstrap}}
-                        </div>
+               <div class="control-group required">
+                <label class="control-label" for="id_country">Country</label>
+                <div class="controls">
+                    <input id="id_country" maxlength="140" name="country" type="text" required />
+                </div>
+                </div>
+               <div class="control-group required">
+                <label class="control-label" for="id_state">State</label>
+                <div class="controls">
+                    <input id="id_state" maxlength="140" name="state" type="text" required />
+                </div>
+                </div>
+               <div class="control-group required">
+                <label class="control-label" for="id_city">City</label>
+                <div class="controls">
+                    <input id="id_city" maxlength="140" name="city" type="text" required />
+                </div>
+                </div>
+
+           </div>
 <div class="col-sm-9 col-sm-offset-6">
-          <button type="submit" class="btn btn-primary next-step">Save and continue</button>
+          <input type="submit" value="Save and continue" class="btn btn-primary next-step"/>
                </div>
                </div>
           </div>

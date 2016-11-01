@@ -4,19 +4,19 @@
 
   <h2 align="center">Registration</h2>
 
-  <form class="form-horizontal" role="form" action="/core/sportsInterest" method="post" id="sports_interest'>
+  <form class="form-horizontal" role="form" action="/core/register/sportsInterest" method="post" id="sports_interest">
     {% csrf_token %}
-      <h3 align="center">Step 3</h3>
+
+      <h3>Step 3</h3>
       <div class="form-group">
            <div class="col-sm-9 col-sm-offset-3">
 
     {{form|as_bootstrap}}
 </div>
 <div class="col-sm-9 col-sm-offset-6">
-          <button type="submit" class="btn btn-primary next-step">Save and continue</button>
+          <input type="submit" value="Register" class="btn btn-primary btn-lg next-step">
                </div>
                </div>
-          </div>
 
 
   </form>

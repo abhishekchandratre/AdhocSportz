@@ -1,12 +1,20 @@
 {% extends "base.html" %}
+{% load bootstrap_toolkit %}
 {% block content %}
 
-  <h2>Event Create</h2>
+  <h2 align="center">Event Create</h2>
 
-  <form action="/core/register/eventCreate" method="post">
+  <form class="form-horizontal" role="form" action="/core/register/eventCreate" method="post">
     {% csrf_token %}
-    {{form.as_p}}
-  <input type="submit" value="Login" />
+      <div class="form-group">
+           <div class="col-sm-9 col-sm-offset-3">
+
+    {{form|as_bootstrap}}
+               </div>
+          <div class="col-sm-9 col-sm-offset-4">
+  <input style="margin-top:25px;" type="submit" value="Create Event" class="btn btn-primary btn-lg"/>
+  </div>
+  </div>
   </form>
 
 {% endblock %}

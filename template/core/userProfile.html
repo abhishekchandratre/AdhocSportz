@@ -1,43 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<div class="container" style ="height:95%">
+<div ng-controller="userControl" class="container" style ="height:95%" data-something={{ id }}>
       <div class="row" style="height:inherit;">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-           <A href="edit.html" >Edit Profile</A>
-
-        <A href="edit.html" >Logout</A>
        <br>
-<p class=" text-info">May 05,2014,03:00 pm </p>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-   
-   
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Sampath Kumar</h3>
+              <h3 class="panel-title">{[{ userDetail.user.first_name }]}</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="images/profile_pic.png" class="img-circle img-responsive"> </div>
-                
-                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                  <dl>
-                    <dt>DEPARTMENT:</dt>
-                    <dd>Administrator</dd>
-                    <dt>HIRE DATE</dt>
-                    <dd>11/12/2013</dd>
-                    <dt>DATE OF BIRTH</dt>
-                       <dd>11/12/2013</dd>
-                    <dt>GENDER</dt>
-                    <dd>Male</dd>
-                  </dl>
-                </div>-->
-                <div class=" col-md-9 col-lg-9 "> 
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{% static 'core/images/profile_pic.png' %}" class="img-circle img-responsive"> </div>
+                <div class=" col-md-9 col-lg-9 ">
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
                         <td>Gender</td>
-                        <td>Male</td>
+                        <td>{[{ userDetail.gender }]}</td>
                       </tr>
                       <tr>
                         <td>Age</td>
@@ -45,7 +27,7 @@
                       </tr>
                       <tr>
                         <td>Region</td>
-                        <td>Charlotte, North Carolina</td>
+                        <td>{[{ userDetail.location}]}</td>
                       </tr>
 						<tr>
                         <td>Email</td>
@@ -53,21 +35,19 @@
                       </tr>
 					  <tr>
                         <td>Phone Number</td>
-                        <td>704-906-6315(Mobile)
+                        <td>{[{ userDetail.phoneNumber }]}(Mobile)
                         </td>
                            
                       </tr>
                      <tr>
                         <td>Status</td>
-                        <td>I am a Novice soccer player. Interested in improving my skills
+                        <td> {[{ userDetail.oneLinerStatus }]}
                         </td>
                            
                       </tr>
-					  <tr>
-                        <td>Sports Interested in</td>
-                        <td>Soccer, Football, Cricket, Basketball, Tennis
+					  <tr ng-repeat="sport in userDetail.sports">
+                        <td>Sports Interested: </td><td>{[{ sport.sportName }]},{[{ sport.sportType.categoryName }]}
                         </td>
-                           
                       </tr>
                     </tbody>
                   </table>

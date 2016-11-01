@@ -4,7 +4,7 @@
 
   <h2 align="center">Registration</h2>
 
-  <form class="form-horizontal" role="form" action="/core/register" method="post" id="user_details">
+  <form class="form-horizontal" role="form" action="/core/register/basic" method="post" id="user_details">
     {% csrf_token %}
       <h3 align="center">Step 1</h3>
       <div class="form-group">
@@ -14,18 +14,7 @@
 
 </div>
 <div class="col-sm-9 col-sm-offset-6">
-          <input type="submit" class="btn btn-primary next-step">Save and continue</input>
-    {% if form.subject.errors %}
-    <ol>
-    {% for error in form.subject.errors %}
-        <li><strong>{{ error|escape }}</strong></li>
-    {% endfor %}
-    </ol>
-{% endif %}
-
-     {{ form.errors }}
-  {{ form.non_field_errors }}
-
+          <input type="submit" value="Save and continue" class="btn btn-primary next-step"></input>
                </div>
                </div>
 
