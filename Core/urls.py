@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'api/sports/$',views.sportCollection,name='sportCollection'),
     url(r'api/user/$',views.userCollection,name='userCollection'),
     url(r'api/user/(?P<pk>[0-9]+)/$',views.userDetails,name='userCollection'),
-    url(r'api/event/$',views.eventCollection,name='userCollection'),
-    url(r'api/event/(?P<pk>[0-9]+)/$',views.eventDetails,name='userCollection'),
+    url(r'api/myevent/$',views.myEventCollection,name='myEventCollection'),
+    url(r'api/event/$',views.eventCollection,name='eventCollection'),
+    url(r'api/event/(?P<pk>[0-9]+)/$',views.eventDetails,name='eventDetails'),
 ]
