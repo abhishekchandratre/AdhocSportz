@@ -27,7 +27,7 @@
                       </tr>
                       <tr>
                         <td>Region</td>
-                        <td>{[{ userDetail.location.country}]},{[{ userDetail.location.States}]},{[{ userDetail.location.region}]}</td>
+                        <td>{[{ userDetail.location.country}]},{[{ userDetail.location.state}]},{[{ userDetail.location.region}]}</td>
                       </tr>
 						<tr>
                         <td>Email</td>
@@ -46,7 +46,7 @@
                            
                       </tr>
 					  <tr ng-repeat="sport in userDetail.sports">
-                        <td>Sports Interested: </td><td>{[{ sport.sportName }]},{[{ sport.sportType.categoryName }]}
+                        <td>Sports Interested: </td><td>{[{ sport.sportName }]} under {[{ sport.sportType.categoryName }]} category
                         </td>
                       </tr>
                     </tbody>
