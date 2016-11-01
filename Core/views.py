@@ -16,6 +16,7 @@ from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, Spo
 @login_required
 def index(request):
     token = {}
+    token['fullname'] = request.user
     return render_to_response("core/index.html", token)
 
 
