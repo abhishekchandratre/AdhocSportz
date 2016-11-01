@@ -20,7 +20,6 @@ sportsApp.config([
 sportsApp.controller('userControl',['$scope','$http', '$attrs',
     function userControl ($scope,$http,$attrs) {
         var userID = $attrs.something;
-        alert(userID);
         $http.get('/core/api/user/' + userID).success(function(data) {
             $scope.userDetail = data;
         });
