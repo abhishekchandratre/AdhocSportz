@@ -60,8 +60,9 @@ class Events(models.Model):
     location = models.ForeignKey(Location)
     numberOfPlayers = models.IntegerField(default=1)
     #EventPicture = models.ImageField(null=True)
+    players = models.ForeignKey(UserInfo)
 
 
-class EventPlayers(models.Model):
-    event = models.OneToOneField(Events)
-    players = models.ForeignKey(User)
+class UserFriends(models.Model):
+    user = models.OneToOneField(User)
+    friends = models.ManyToManyField(UserInfo)
