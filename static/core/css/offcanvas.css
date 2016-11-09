@@ -47,6 +47,9 @@ footer {
 }
 
 
+#streetview {display:inline-block !important;width:45%;height: 400px}
+
+
 /* Times */
 .agenda .agenda-time { width: 140px; } 
 
@@ -470,3 +473,4 @@ span.round-tab:hover {
     .timeline > li.timeline-inverted > .timeline-badge {
         left: 28px;
     }}
+

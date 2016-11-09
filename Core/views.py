@@ -215,6 +215,16 @@ def eventView(request):
 
 
 @login_required
+def eventMap(request):
+    if request.method == 'GET':
+        token = {}
+        token = dict()
+        token['location'] = request.user.id
+        return render_to_response("core/eventMap.html", token)
+
+
+
+@login_required
 def profileView(request):
     if request.method == 'GET':
         token = {}

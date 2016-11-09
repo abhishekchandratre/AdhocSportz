@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var sportsApp = angular.module('sportsApp',[]);
+var sportsApp = angular.module('sportsApp',['ngMap']);
 
 sportsApp.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('{[{');
@@ -40,4 +40,13 @@ sportsApp.controller('eventView',['$scope','$http',
             $scope.myEvents = data;
         });
     }
+    ]);
+
+sportsApp.controller('mapEvent',['$scope','$http',
+    function mapEvent ($scope,$http,NgMap) {
+        $http.get('/core/api/event/').success(function (data) {
+            $scope.mapEvents = data;
+        });
+    }
+
     ]);
