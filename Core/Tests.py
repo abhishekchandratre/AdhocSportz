@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import UserInfo
 
+
 class TestRegistration(TestCase):
  def test_user_registration(self):
 
