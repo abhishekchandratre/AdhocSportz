@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'api/user/$',views.userCollection,name='userCollection'),
     url(r'api/user/(?P<pk>[0-9]+)/$',views.userDetails,name='userDetails'),
     url(r'api/myevent/$',views.myEventCollection,name='myEventCollection'),
+    url(r'api/eventMap/$',views.eventMap,name='eventMap'),
     url(r'api/event/$',views.eventCollection,name='eventCollection'),
     url(r'api/event/(?P<pk>[0-9]+)/$',views.eventDetails,name='eventDetails'),
 ]
