@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <div ng-controller="mapEvent" class="container-fluid">
+  <ng-map zoom="8" style="height:400px" center="[35.227085, -80.843124]" default-style="false"
+    tilt="45">
+      <marker position="current-position" title="Your location">
+      </marker><marker ng-repeat="event in mapEvents"  position="{[{event.location.region}]}"  title="{[{event.name}]}
+on {[{ event.startDate }]} join the party!!"></marker></ng-map>
+      <street-view-panorama container="streetview">
+      </street-view-panorama></ng-map>
+  <div id="streetview"></div>
+  </div>
+{% endblock %}
+
+
