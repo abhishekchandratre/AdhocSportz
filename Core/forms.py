@@ -39,7 +39,7 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
         fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
-        widgets = {'birthDate': extras.SelectDateWidget(years=range(1920, 2016))}
+        widgets = {'birthDate': extras.SelectDateWidget(years=range(1970, 2016))}
 
 
 class SportsInterestForm(forms.Form):
@@ -67,7 +67,7 @@ class SportsInterestForm(forms.Form):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Events
-        fields = ('name', 'desc', 'sport', 'startDate', 'numberOfPlayers')
+        fields = ('name', 'desc', 'sport', 'startDate', 'numberOfPlayers', 'eventType')
         widgets = {'startDate': extras.SelectDateWidget(years=range(2016, 2020))}
 
     def save(self,commit=True):

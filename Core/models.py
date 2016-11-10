@@ -59,6 +59,11 @@ class Events(models.Model):
     startDate = models.DateField()
     location = models.ForeignKey(Location)
     numberOfPlayers = models.IntegerField(default=1)
+    EVENT_CHOICE = (
+        ('Public', 'Public'),
+        ('Private', 'Private'),
+    )
+    eventType = models.CharField(max_length=10, choices=EVENT_CHOICE)
     #EventPicture = models.ImageField(null=True)
 
 

@@ -161,7 +161,9 @@ def myEventCollection(request):
 def eventCollection(request):
     if request.method == 'GET':
         try:
-            events = Events.objects.filter(~Q(owner_id=request.user.id))
+            criterion1 = ~Q(owner_id=request.user.id)
+            criterion2 = ~Q(eventType='Private')
+            events = Events.objects.filter(criterion1 & criterion2)
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
