@@ -81,3 +81,4 @@ class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
         fields = ('country', 'state', 'region')
+

@@ -74,3 +74,26 @@ $(document).ready(function() {
     });
 });
 
+
+function submit(){
+    alert("submit");
+    var element = document.get
+}
+/*$(document).on('submit','#joinEvent',function(event) {
+        alert("ajaxxx cal");
+        alert($('#eventID').val());
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/core/event/join',
+            data: {
+                event: $('#eventID').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function () {
+                alert(document.getElementById('eventButton'));
+                document.getElementById('eventButton').disabled = true;
+                alert("Sent the Event Request Successfully! ")
+            }
+        });
+    });*/

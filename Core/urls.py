@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'login/complete$', views.homePage, name='homepage'),
     url(r'accounts/login$', views.login_user, name='login'),
     url(r'accounts/logout$', views.logout_user, name='login'),
+    url(r'event/join$', views.eventJoin, name='eventJoin'),
     url(r'accounts/profile$', views.profileView, name='profile'),
     url(r'api/sports/$',views.sportCollection,name='sportCollection'),
     url(r'api/user/$',views.userCollection,name='userCollection'),

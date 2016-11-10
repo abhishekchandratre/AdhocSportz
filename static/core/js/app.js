@@ -28,10 +28,25 @@ sportsApp.controller('userControl',['$scope','$http', '$attrs',
 
 sportsApp.controller('eventControl',['$scope','$http',
     function eventControl ($scope,$http) {
+        $scope.disable = "";
         $http.get('/core/api/event/').success(function(data) {
             $scope.events = data;
         });
-    }
+
+        $scope.submit = function(value){
+            $.ajax({
+            type: 'POST',
+            url: '/core/event/join',
+            data: {
+                event: value,
+                //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function () {
+                $scope.disable = true;
+                $scope.$apply();
+            }
+        });
+        }}
     ]);
 
 sportsApp.controller('eventView',['$scope','$http',

@@ -6,9 +6,11 @@ from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
-from .models import SportsType, Sports, UserInfo, Events, Location
+from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers
 from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer
 
 
@@ -133,6 +135,7 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
+
                     context = {'request': request}
                     return render_to_response('core/index.html', context)
 
@@ -158,7 +161,7 @@ def myEventCollection(request):
 def eventCollection(request):
     if request.method == 'GET':
         try:
-            events = Events.objects.all()
+            events = Events.objects.filter(~Q(owner_id=request.user.id))
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
@@ -212,6 +215,19 @@ def eventView(request):
         token['id'] = request.user.id
         print(request.user.id)
         return render_to_response("core/register/eventView.html", token)
+
+
+@login_required
+@csrf_exempt
+def eventJoin(request):
+    if request.is_ajax():
+        eventplayers = EventPlayers.objects.create(
+            event_id = request.POST['event'],
+            players_id = request.user.id
+        )
+        eventplayers.save()
+        return HttpResponseRedirect('/core/')
+
 
 
 @login_required
