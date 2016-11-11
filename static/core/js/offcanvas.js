@@ -75,10 +75,6 @@ $(document).ready(function() {
 });
 
 
-function submit(){
-    alert("submit");
-    var element = document.get
-}
 /*$(document).on('submit','#joinEvent',function(event) {
         alert("ajaxxx cal");
         alert($('#eventID').val());
