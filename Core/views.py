@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
-from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers
+from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends
 from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer
 
 
@@ -162,6 +162,29 @@ def eventCollection(request):
     if request.method == 'GET':
         try:
             criterion1 = ~Q(owner_id=request.user.id)
+            events = Events.objects.filter(criterion1)
+        except Events.DoesNotExist:
+            return HttpResponse(status=404)
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def privateEventCollection(request):
+    if request.method == 'GET':
+        try:
+            criterion1 = ~Q(owner_id=request.user.id)
+            criterion2 = ~Q(eventType='Public')
+            events = Events.objects.filter(criterion1 & criterion2)
+        except Events.DoesNotExist:
+            return HttpResponse(status=404)
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def publicEventCollection(request):
+    if request.method == 'GET':
+        try:
+            criterion1 = ~Q(owner_id=request.user.id)
             criterion2 = ~Q(eventType='Private')
             events = Events.objects.filter(criterion1 & criterion2)
         except Events.DoesNotExist:
@@ -231,6 +254,29 @@ def eventJoin(request):
         return HttpResponseRedirect('/core/')
 
 
+@login_required
+def friendsprofileView(request, pk):
+    if request.method == 'GET':
+        token = {}
+        token = dict()
+        token['userId'] = request.user.id
+        token['friendId'] = pk
+        friends = UserFriends.objects.filter(id = pk)
+        if friends.count() > 0:
+            token['isFriend'] = "true"
+        return render_to_response("core/friendsProfile.html", token)
+
+
+@login_required
+def connect(request):
+    if request.is_ajax():
+        userFriends = UserFriends.objects.create(
+            user = request.user.id,
+            friends = request.POST['user'],
+        )
+        userFriends.save()
+        return HttpResponseRedirect('/core/')
+
 
 @login_required
 def eventMap(request):
@@ -248,8 +294,8 @@ def profileView(request):
         token = {}
         token = dict()
         token['id'] = request.user.id
-        print(request.user.id)
         return render_to_response("core/userProfile.html", token)
+
 
 
 @api_view(['GET'])

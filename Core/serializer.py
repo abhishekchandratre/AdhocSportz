@@ -46,7 +46,7 @@ class EventSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     class Meta:
         model = Events
-        fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
+        fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'eventType', 'location')
 
 
 class EventInfoSerializer(serializers.ModelSerializer):

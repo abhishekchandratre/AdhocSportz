@@ -39,7 +39,6 @@ class UserInfo(models.Model):
     location = models.ForeignKey(Location, null=True)
     #profilePicture = models.ImageField(null=True)
     sports = models.ManyToManyField(Sports)
-
     def __str__(self):
         return self.user.first_name + self.user.last_name + str(self.sports.values())
 

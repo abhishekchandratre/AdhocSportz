@@ -11,6 +11,9 @@
       <p>Coming together is the beginning. Staying together is progress. Working together is success</p>
           </div>
           <div class="row">
+              <select ng-model="event" ng-change="getEventDetails()" ng-options="option for option in eventOptions" class="form-control">
+                  <option value="" selected="selected">Choose the type of Event</option>
+                </select>
             <div class="col-xs-6 col-lg-4" ng-repeat="event in events">
               <h2>{[{ event.name }]}</h2>
               <p>{[{ event.desc }]}</p>
@@ -33,7 +36,7 @@
                 <p>Event Location: {[{ event.location.country }]}</p>
                 <p>{[{ event.location.state }]}</p>
                 <p>{[{ event.location.region }]}</p>
-                <button id="eventButton{[{ event.id }]}" ng-click=submit(event.id) class="btn btn-primary btn-lg">RSVP Event</button>
+                <button id="eventButton{[{ event.id }]}" ng-click=submit(event.id) class="btn btn-primary btn-lg">Join Event</button>
             </div>			<!-- /modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

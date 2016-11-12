@@ -23,6 +23,18 @@ sportsApp.controller('userControl',['$scope','$http', '$attrs',
         $http.get('/core/api/user/' + userID).success(function(data) {
             $scope.userDetail = data;
         });
+        $scope.submit = function(value){
+            $.ajax({
+            type: 'POST',
+            url: '/core/user/connect',
+            data: {
+                friends: value,
+            },
+            success: function () {
+                $scope.disabled = true
+            }
+        });
+        }
     }
     ]);
 
@@ -31,6 +43,26 @@ sportsApp.controller('eventControl',['$scope','$http',
         $http.get('/core/api/event/').success(function(data) {
             $scope.events = data;
         });
+        $scope.eventOptions = ['Public Events', 'Private Events', 'Both'];
+        $scope.getEventDetails = function () {
+        if($scope.event == 'Public Events') {
+            alert("public")
+            $http.get('/core/api/publicEvent/').success(function (data) {
+                $scope.events = data;
+            });
+        }else if($scope.event == 'Private Events') {
+            alert("private")
+            $http.get('/core/api/privateEvent/').success(function (data) {
+                $scope.events = data;
+            });
+        }else{
+            alert("both")
+            $http.get('/core/api/event/').success(function (data) {
+                $scope.events = data;
+            });
+        }
+        }
+
         $scope.submit = function(value){
             $.ajax({
             type: 'POST',
