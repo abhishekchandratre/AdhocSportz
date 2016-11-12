@@ -46,17 +46,14 @@ sportsApp.controller('eventControl',['$scope','$http',
         $scope.eventOptions = ['Public Events', 'Private Events', 'Both'];
         $scope.getEventDetails = function () {
         if($scope.event == 'Public Events') {
-            alert("public")
             $http.get('/core/api/publicEvent/').success(function (data) {
                 $scope.events = data;
             });
         }else if($scope.event == 'Private Events') {
-            alert("private")
             $http.get('/core/api/privateEvent/').success(function (data) {
                 $scope.events = data;
             });
         }else{
-            alert("both")
             $http.get('/core/api/event/').success(function (data) {
                 $scope.events = data;
             });
