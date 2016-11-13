@@ -2,12 +2,6 @@
 
 db=$1
 echo "This script would populate tables in $db ."
-echo "This would erase will the present contents from the database.[y/n]"
-read input
-if [ $input == 'n' ]; then
-	echo "Exiting..."
-	exit
-fi
 echo "Deleting core_sportstype"
 sqlite3 $db "DELETE FROM Core_sportstype;"
 sqlite3 $db "delete from sqlite_sequence where name='Core_sportstype';"
