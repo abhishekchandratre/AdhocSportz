@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from . import add_users
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -17,13 +18,14 @@ urlpatterns = [
     url(r'user/connect$', views.connect, name='connect'),
     url(r'accounts/profile$', views.profileView, name='profile'),
     url(r'accounts/friendsProfile/(?P<pk>[0-9]+)/$', views.friendsprofileView, name='friendsProfile'),
-    url(r'api/sports/$',views.sportCollection,name='sportCollection'),
-    url(r'api/user/$',views.userCollection,name='userCollection'),
-    url(r'api/user/(?P<pk>[0-9]+)/$',views.userDetails,name='userDetails'),
-    url(r'api/myevent/$',views.myEventCollection,name='myEventCollection'),
-    url(r'api/eventMap/$',views.eventMap,name='eventMap'),
-    url(r'api/event/$',views.eventCollection,name='eventCollection'),
-    url(r'api/privateEvent/$',views.privateEventCollection,name='privateEventCollection'),
-    url(r'api/publicEvent/$',views.publicEventCollection,name='publicEventCollection'),
-    url(r'api/event/(?P<pk>[0-9]+)/$',views.eventDetails,name='eventDetails'),
+    url(r'api/sports/$', views.sportCollection, name='sportCollection'),
+    url(r'api/user/$', views.userCollection, name='userCollection'),
+    url(r'api/user/(?P<pk>[0-9]+)/$', views.userDetails, name='userDetails'),
+    url(r'api/myevent/$', views.myEventCollection, name='myEventCollection'),
+    url(r'api/eventMap/$', views.eventMap, name='eventMap'),
+    url(r'api/event/$', views.eventCollection, name='eventCollection'),
+    url(r'api/privateEvent/$', views.privateEventCollection, name='privateEventCollection'),
+    url(r'api/publicEvent/$', views.publicEventCollection, name='publicEventCollection'),
+    url(r'api/event/(?P<pk>[0-9]+)/$', views.eventDetails, name='eventDetails'),
+    url(r'add_users/$', add_users.create_user_with_all_details, name='eventCollection'),
 ]
