@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Events, UserInfo, Location, Sports, SportsType
-
+from .models import Events, UserInfo, Location, Sports, SportsType, UserFriends
 
 
 
@@ -56,3 +55,11 @@ class EventInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
         fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'location')
+
+
+class UserFriendsSerializer(serializers.ModelSerializer):
+    friends = UserInfoSerializer(read_only=True,many=True)
+
+    class Meta:
+        model = UserFriends
+        fields = ('friends',)

@@ -27,5 +27,7 @@ urlpatterns = [
     url(r'api/privateEvent/$', views.privateEventCollection, name='privateEventCollection'),
     url(r'api/publicEvent/$', views.publicEventCollection, name='publicEventCollection'),
     url(r'api/event/(?P<pk>[0-9]+)/$', views.eventDetails, name='eventDetails'),
+    url(r'api/friends/(?P<pk>[0-9]+)/$', views.userFriends, name='userFriends'),
     url(r'add_users/$', add_users.create_user_with_all_details, name='eventCollection'),
+    url(r'friends/$', views.userFriendsView, name='eventCollection'),
 ]

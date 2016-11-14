@@ -11,7 +11,7 @@ from django.db.models import Q
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends
-from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer
+from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer, UserFriendsSerializer
 
 
 # Create your views here.
@@ -324,3 +324,29 @@ def sportCollection(request):
         sports = Sports.objects.all()
         serialize = SportsSerializer(sports, many=True)
         return Response(serialize.data)
+
+
+@api_view(['GET'])
+def userFriends(request, pk):
+    #user = User.objects.get(id=request.user.id)
+    #user = User.objects.get(id=1)
+    #user2 = UserInfo.objects.get(user_id=2)
+    #user3 = UserInfo.objects.get(user_id=3)
+    #userFriends = UserFriends.objects.get(user=user)
+    #userFriends.save()
+    #userFriends.friends.add(user2)
+    #userFriends.friends.add(user3)
+    #userFriends.save()
+    if request.method == 'GET':
+        user = User.objects.get(id=pk)
+        userObj = UserFriends.objects.get(user=user)
+        serialize = UserFriendsSerializer(userObj)
+        return Response(serialize.data)
+
+
+@login_required
+def userFriendsView(request):
+    token = {}
+    token['fullname'] = request.user
+    token['userId'] = request.user.id
+    return render_to_response("core/friends.html", token)

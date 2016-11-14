@@ -93,3 +93,12 @@ sportsApp.controller('mapEvent',['$scope','$http',
     }
 
     ]);
+
+sportsApp.controller('friendsControl',['$scope','$http', '$attrs',
+    function friendsControl ($scope,$http,$attrs) {
+        var userID = $attrs.something;
+        $http.get('/core/api/friends/' + userID).success(function(data) {
+            $scope.userFriendsDetail = data;
+        });
+    }
+    ]);
