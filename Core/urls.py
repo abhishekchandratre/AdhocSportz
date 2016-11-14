@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'api/publicEvent/$', views.publicEventCollection, name='publicEventCollection'),
     url(r'api/event/(?P<pk>[0-9]+)/$', views.eventDetails, name='eventDetails'),
     url(r'api/friends/(?P<pk>[0-9]+)/$', views.userFriends, name='userFriends'),
+    url(r'api/searchUsers/(?P<str>[0-9a-zA-Z]+)/$', views.searchUsers, name='searchUsers'),
     url(r'add_users/$', add_users.create_user_with_all_details, name='eventCollection'),
     url(r'friends/$', views.userFriendsView, name='eventCollection'),
+    url(r'search/$', views.search, name='searchUsers'),
 ]

@@ -11,7 +11,8 @@ from django.db.models import Q
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends
-from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer, UserFriendsSerializer
+from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, SportsSerializer, EventInfoSerializer, \
+    UserFriendsSerializer
 
 
 # Create your views here.
@@ -116,6 +117,7 @@ def registration_complete(request):
 
     return render_to_response('core/register/registration_complete.html')
 
+
 def homePage(request):
     return HttpResponseRedirect('/core/')
 
@@ -123,6 +125,7 @@ def homePage(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/core/')
+
 
 def login_user(request):
     if request.method == 'POST':
@@ -157,6 +160,7 @@ def myEventCollection(request):
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
+
 @api_view(['GET'])
 def eventCollection(request):
     if request.method == 'GET':
@@ -167,6 +171,7 @@ def eventCollection(request):
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
+
 
 @api_view(['GET'])
 def privateEventCollection(request):
@@ -179,6 +184,7 @@ def privateEventCollection(request):
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
+
 
 @api_view(['GET'])
 def publicEventCollection(request):
@@ -232,6 +238,7 @@ def eventCreate(request):
     context['form'] = form
     return render_to_response('core/register/eventCreate.html', context)
 
+
 @login_required
 def eventView(request):
     if request.method == 'GET':
@@ -247,8 +254,8 @@ def eventView(request):
 def eventJoin(request):
     if request.is_ajax():
         eventplayers = EventPlayers.objects.create(
-            event_id = request.POST['event'],
-            players_id = request.user.id
+            event_id=request.POST['event'],
+            players_id=request.user.id
         )
         eventplayers.save()
         return HttpResponseRedirect('/core/')
@@ -261,7 +268,7 @@ def friendsprofileView(request, pk):
         token = dict()
         token['userId'] = request.user.id
         token['friendId'] = pk
-        friends = UserFriends.objects.filter(id = pk)
+        friends = UserFriends.objects.filter(id=pk)
         if friends.count() > 0:
             token['isFriend'] = "true"
         return render_to_response("core/friendsProfile.html", token)
@@ -271,8 +278,8 @@ def friendsprofileView(request, pk):
 def connect(request):
     if request.is_ajax():
         userFriends = UserFriends.objects.create(
-            user = request.user.id,
-            friends = request.POST['user'],
+            user=request.user.id,
+            friends=request.POST['user'],
         )
         userFriends.save()
         return HttpResponseRedirect('/core/')
@@ -287,7 +294,6 @@ def eventMap(request):
         return render_to_response("core/eventMap.html", token)
 
 
-
 @login_required
 def profileView(request):
     if request.method == 'GET':
@@ -295,7 +301,6 @@ def profileView(request):
         token = dict()
         token['id'] = request.user.id
         return render_to_response("core/userProfile.html", token)
-
 
 
 @api_view(['GET'])
@@ -328,19 +333,30 @@ def sportCollection(request):
 
 @api_view(['GET'])
 def userFriends(request, pk):
-    #user = User.objects.get(id=request.user.id)
-    #user = User.objects.get(id=1)
-    #user2 = UserInfo.objects.get(user_id=2)
-    #user3 = UserInfo.objects.get(user_id=3)
-    #userFriends = UserFriends.objects.get(user=user)
-    #userFriends.save()
-    #userFriends.friends.add(user2)
-    #userFriends.friends.add(user3)
-    #userFriends.save()
+    # user = User.objects.get(id=request.user.id)
+    # user = User.objects.get(id=1)
+    # user2 = UserInfo.objects.get(user_id=2)
+    # user3 = UserInfo.objects.get(user_id=3)
+    # userFriends = UserFriends.objects.get(user=user)
+    # userFriends.save()
+    # userFriends.friends.add(user2)
+    # userFriends.friends.add(user3)
+    # userFriends.save()
     if request.method == 'GET':
         user = User.objects.get(id=pk)
         userObj = UserFriends.objects.get(user=user)
         serialize = UserFriendsSerializer(userObj)
+        return Response(serialize.data)
+
+
+@api_view(['GET'])
+def searchUsers(request, str):
+    if request.method == 'GET':
+        userObj = UserInfo.objects.filter(
+            Q(user__username__contains=str) |
+            Q(user__first_name__contains=str))
+        print(userObj)
+        serialize = UserInfoSerializer(userObj, many=True)
         return Response(serialize.data)
 
 
@@ -350,3 +366,12 @@ def userFriendsView(request):
     token['fullname'] = request.user
     token['userId'] = request.user.id
     return render_to_response("core/friends.html", token)
+
+
+@login_required
+@csrf_exempt
+def search(request):
+    if request.method == 'POST':
+        context = {}
+        context['searchStr'] = request.POST['searchStr']
+        return render_to_response("core/search.html", context)

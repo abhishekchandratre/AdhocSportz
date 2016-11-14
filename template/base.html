@@ -50,18 +50,31 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="core/login/complete">Home</a></li>
             <li><a href="core/accounts/profile">Profile</a></li>
+            <li><a href="core/friends">Friends</a></li>
 			<li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="core/register/eventCreate">Create Event</a></li>
-            <li><a href="core/register/eventView">View Events</a></li>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Events<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="core/register/eventCreate">Create Event</a></li>
+                <li><a href="core/register/eventView">View Events</a></li>
+              </ul>
+            </li>
           </ul>
-        </li>
-            <li><a href="core/api/eventMap">View Events by Map</a></li>
-          </ul>
+        <div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="form" action="/core/search/" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="searchStr" value="{{ searchStr }}">
+                <div class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="Search">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </input>
+                </div>
+            </div>
+            </form>
+        </div>
 		  <ul class="nav navbar-nav navbar-right">
-        <li><a href="core/accounts/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-      </ul>
+              <li><a href="core/api/eventMap">View Events by Map</a></li>
+              <li><a href="core/accounts/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
 
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
