@@ -6,14 +6,7 @@
           <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
           </p>
-            <div class="jumbotron">
-            <h1>Hello, {{ request.session.fullname }}!</h1>
-      <p>Coming together is the beginning. Staying together is progress. Working together is success</p>
-          </div>
           <div class="row">
-              <select ng-model="event" ng-change="getEventDetails()" ng-options="option for option in eventOptions" class="form-control">
-                  <option value="" selected="selected">Choose the type of Event</option>
-                </select>
             <div class="col-xs-6 col-lg-4" ng-repeat="friend in userFriendsDetail.friends">
               <h2>{[{ friend.user.last_name }]}, {[{ friend.user.first_name }]}</h2>
 			  <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Event &raquo;</a>
