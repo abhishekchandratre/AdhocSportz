@@ -25,6 +25,7 @@
                 <p>Email: {[{ friend.user.email }]}</p>
                 <p>PhoneDetails: {[{ friend.phoneNumber }]}</p>
                 <p>Location: {[{ friend.location.country }]},{[{ friend.location.state }]},{[{ friend.location.region }]}</p>
+                <button id="connect" ng-click=submit(friend.user.id) ng-disabled="disabled" class="btn btn-primary btn-lg">Follow</button>
             </div>			<!-- /modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -109,5 +109,18 @@ sportsApp.controller('searchControl',['$scope','$http', '$attrs',
         $http.get('core/api/searchUsers/' + string).success(function(data) {
             $scope.searchUsers = data;
         });
+        $scope.submit = function(value){
+            alert("control"+value)
+            $.ajax({
+            type: 'POST',
+            url: '/core/user/connect',
+            data: {
+                friends: value,
+            },
+            success: function () {
+                $scope.disabled = true
+            }
+        });
+        }
     }
 ]);

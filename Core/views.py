@@ -280,13 +280,23 @@ def friendsprofileView(request, pk):
 
 
 @login_required
+@csrf_exempt
 def connect(request):
     if request.is_ajax():
-        userFriends = UserFriends.objects.create(
-            user=request.user.id,
-            friends=request.POST['user'],
-        )
-        userFriends.save()
+        friend = User.objects.get(id=request.POST['friends'])
+        friendObj = UserInfo.objects.get(user=friend)
+        try:
+            userFriends = UserFriends.objects.get(
+                user = request.user
+            )
+            userFriends.friends.add(friendObj)
+            userFriends.save()
+        except:
+            userFriends = UserFriends.objects.create(
+                user = request.user)
+            userFriends.save()
+            userFriends.friends.add(friendObj)
+            userFriends.save()
         return HttpResponseRedirect('/core/')
 
 
