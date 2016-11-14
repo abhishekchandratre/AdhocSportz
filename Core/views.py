@@ -139,6 +139,11 @@ def login_user(request):
                     context = {'request': request}
                     return render_to_response('core/index.html', context)
 
+    if request.user.is_authenticated():
+        request.session['fullname'] = request.user.first_name + ' ' + request.user.last_name
+        context = {'request': request}
+        return render_to_response('core/index.html', context)
+
     form = LoginForm()
     context = {}
     context.update(csrf(request))
