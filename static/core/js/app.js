@@ -110,7 +110,6 @@ sportsApp.controller('searchControl',['$scope','$http', '$attrs',
             $scope.searchUsers = data;
         });
         $scope.submit = function(value){
-            alert("control"+value)
             $.ajax({
             type: 'POST',
             url: '/core/user/connect',
