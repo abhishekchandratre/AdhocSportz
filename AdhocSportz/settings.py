@@ -130,3 +130,7 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 # Login URL for default redirect
 
 LOGIN_URL = '/core/accounts/login'
+
+# For media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"

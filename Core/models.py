@@ -18,6 +18,7 @@ class Location(models.Model):
 class Sports(models.Model):
     sportName = models.CharField(max_length=140)
     sportType = models.ForeignKey('SportsType')
+    sportImage = models.FileField(upload_to='sport_img/',null=True)
 
     def __str__(self):
         return self.sportName

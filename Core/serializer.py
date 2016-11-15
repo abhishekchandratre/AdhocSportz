@@ -27,7 +27,7 @@ class SportsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sports
-        fields = ('sportName', 'sportType')
+        fields = ('sportName', 'sportType','sportImage')
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
@@ -43,6 +43,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     owner = UserSerializer()
     location = LocationSerializer()
+    sport = SportsSerializer()
     class Meta:
         model = Events
         fields = ('id', 'owner', 'sport', 'name', 'desc', 'numberOfPlayers', 'startDate', 'eventType', 'location')

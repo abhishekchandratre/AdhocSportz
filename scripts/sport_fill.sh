@@ -22,7 +22,7 @@ sqlite3 $db "DELETE FROM Core_sports;"
 sqlite3 $db "delete from sqlite_sequence where name='Core_sports';"
 echo "Inserting into Core_sports"
 sportsTypeID=`sqlite3 $db "Select id from Core_sportstype where categoryName='Team Sports'"`
-sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Baseball',$sportsTypeID);"
+sqlite3 $db "Insert into Core_sports (sportName,sportType_id,sportImage) values ('Baseball',$sportsTypeID,'sport_img/baseball.jpg');"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Cricket',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Rugby',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Soccer',$sportsTypeID);"
@@ -66,11 +66,11 @@ sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Surfing',
 sportsTypeID=`sqlite3 $db "Select id from Core_sportstype where categoryName='Grass / Feild Sports'"`
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Beach Tennis',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Gold',$sportsTypeID);"
-sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Polo',$sportsTypeID);"
+sqlite3 $db "Insert into Core_sports (sportName,sportType_id,sportImage) values ('Polo',$sportsTypeID,'sport_img/polo.jpg');"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Tennis',$sportsTypeID);" 
 
 sportsTypeID=`sqlite3 $db "Select id from Core_sportstype where categoryName='Winter Sports'"`
-sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Skiing',$sportsTypeID);"
+sqlite3 $db "Insert into Core_sports (sportName,sportType_id,sportImage) values ('Skiing',$sportsTypeID,'sport_img/skiing.jpg');"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Snowboarding',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('SnowsHoeing',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Snowmobiling',$sportsTypeID);"
@@ -79,4 +79,4 @@ sportsTypeID=`sqlite3 $db "Select id from Core_sportstype where categoryName='Ol
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Badminton',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Curling',$sportsTypeID);"
 sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Fencing',$sportsTypeID);"
-sqlite3 $db "Insert into Core_sports (sportName,sportType_id) values ('Judo',$sportsTypeID);"
+sqlite3 $db "Insert into Core_sports (sportName,sportType_id,sportImage) values ('Judo',$sportsTypeID,'sport_img/judo.jpg');"
