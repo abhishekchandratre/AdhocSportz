@@ -172,7 +172,8 @@ def eventCollection(request):
     if request.method == 'GET':
         try:
             criterion1 = ~Q(owner_id=request.user.id)
-            events = Events.objects.filter(criterion1).order_by('startDate').reverse()
+            criterion2 = ~Q(eventType='Private')
+            events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
