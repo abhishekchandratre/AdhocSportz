@@ -117,7 +117,8 @@ sportsApp.controller('searchControl',['$scope','$http', '$attrs',
                 friends: value,
             },
             success: function () {
-                $scope.disabled = true
+                var element = document.querySelector("#connect"+value);
+                element.setAttribute("disabled","disabled");
             }
         });
         }

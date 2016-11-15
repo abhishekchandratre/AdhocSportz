@@ -18,9 +18,9 @@
               <h2>{[{ event.name }]}</h2>
               <p>{[{ event.desc }]}</p>
                 <div>
-                    <img src="{[{ event.sport.sportImage }]}" class="img-thumbnail" >
+                    <a href="" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="link"><img src="{[{ event.sport.sportImage }]}" class="img-thumbnail" ></a>
                 </div>
-			  <p><a class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Event &raquo;</a>
+			  <p><a class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Event &raquo;</a>
               </p>
 			  <!-- Modal -->
 				<div class="modal fade text-center" id="myModal{[{ event.id }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
