@@ -52,7 +52,7 @@ sportsApp.controller('eventControl',['$scope','$http',
                 $scope.errorFlag = false;
             });
         }else if($scope.event == 'Private Events') {
-            $http.get('/core/api/privateEvent/').then(function (data) {
+            $http.get('/core/api/privateEvent/').success(function (data) {
                     $scope.events = data;
             }).catch(function (data) {
                 $scope.events = "";

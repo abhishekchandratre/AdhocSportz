@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from Core.models import Location, UserInfo, Sports, Events
 import datetime
 import subprocess
@@ -59,3 +60,5 @@ def create_user_with_all_details(request):
             event = Events(owner=owner,sport=sport,name=name,desc=desc,startDate=startDate,
                            location=location,numberOfPlayers=num_player,eventType=evt_type)
             event.save()
+
+    return HttpResponse("<h1>Added Users</h1>")
