@@ -42,20 +42,27 @@ sportsApp.controller('eventControl',['$scope','$http',
     function eventControl ($scope,$http) {
         $http.get('/core/api/event/').success(function(data) {
             $scope.events = data;
+            $scope.errorFlag = false;
         });
         $scope.eventOptions = ['Public Events', 'Private Events', 'Both'];
         $scope.getEventDetails = function () {
         if($scope.event == 'Public Events') {
             $http.get('/core/api/publicEvent/').success(function (data) {
                 $scope.events = data;
+                $scope.errorFlag = false;
             });
         }else if($scope.event == 'Private Events') {
-            $http.get('/core/api/privateEvent/').success(function (data) {
-                $scope.events = data;
+            $http.get('/core/api/privateEvent/').then(function (data) {
+                    $scope.events = data;
+            }).catch(function (data) {
+                $scope.events = "";
+                $scope.errorFlag = true;
+                //$scope.errorMessage = "There are no Private events to show";
             });
         }else{
             $http.get('/core/api/event/').success(function (data) {
                 $scope.events = data;
+                $scope.errorFlag = false;
             });
         }
         }

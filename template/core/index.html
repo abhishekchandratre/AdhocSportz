@@ -14,7 +14,10 @@
               <select ng-model="event" ng-change="getEventDetails()" ng-options="option for option in eventOptions" class="form-control">
                   <option value="" selected="selected">Choose the type of Event</option>
                 </select>
-            <div class="col-xs-6 col-lg-4" ng-repeat="event in events">
+              <div style="margin-top: 65px" ng-show="errorFlag">
+                 <h1><strong>There are no Private Events to show. Connect with Friends to View private events!!</strong></h1>
+              </div>
+              <div class="col-xs-6 col-lg-4" ng-repeat="event in events">
               <h2>{[{ event.name }]}</h2>
               <p>{[{ event.desc }]}</p>
                 <div>
