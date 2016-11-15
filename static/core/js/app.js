@@ -106,10 +106,20 @@ sportsApp.controller('friendsControl',['$scope','$http', '$attrs',
 sportsApp.controller('searchControl',['$scope','$http', '$attrs',
     function searchControl ($scope,$http,$attrs) {
         var string = $attrs.something;
-
         $http.get('core/api/searchUsers/' + string).success(function(data) {
             $scope.searchUsers = data;
-            alert(data)
         });
+        $scope.submit = function(value){
+            $.ajax({
+            type: 'POST',
+            url: '/core/user/connect',
+            data: {
+                friends: value,
+            },
+            success: function () {
+                $scope.disabled = true
+            }
+        });
+        }
     }
 ]);
