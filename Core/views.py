@@ -185,16 +185,14 @@ def privateEventCollection(request):
         try:
             criterion1 = ~Q(owner_id=request.user.id)
             criterion2 = ~Q(eventType='Public')
-            userFriends = UserFriends.objects.filter(user=request.user)
+            userFriends = UserFriends.objects.get(user=request.user)
             allEvents = []
-            for friends in userFriends.prefetch_related('friends'):
-                for friend in friends:
-                    user = User.objects.get(id=friend.id)
-                    print(user)
-                    events = Events.objects.filter(owner=user,eventType='Private').values()
-                    for event in events:
-                        allEvents.append(event['id'])
-                    #events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
+            for friend in userFriends.friends.all():
+                user = User.objects.get(id=friend.id)
+                events = Events.objects.filter(owner=user,eventType='Private').values()
+                for event in events:
+                    allEvents.append(event['id'])
+                #events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         allEventsObj = Events.objects.filter(id__in=allEvents)
