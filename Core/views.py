@@ -370,7 +370,6 @@ def searchUsers(request, str):
         userObj = UserInfo.objects.filter(
             Q(user__username__contains=str) |
             Q(user__first_name__contains=str))
-        print(userObj)
         serialize = UserInfoSerializer(userObj, many=True)
         return Response(serialize.data)
 

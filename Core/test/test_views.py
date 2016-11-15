@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 import unittest
 from selenium import webdriver
-from Core.forms import LoginForm
+from Core.forms import LoginForm, LocationForm
 
 
 class TestURL(TestCase):
@@ -11,6 +11,7 @@ class TestURL(TestCase):
         print(url)
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp['Location'], '/core/accounts/login?next=/core/')
 
 
 class TestRegistration(unittest.TestCase):
@@ -35,6 +36,15 @@ class TestForms(unittest.TestCase):
         form = LoginForm(data=data)
         self.assertFalse(form.is_valid())
 
+    def test_LocationForm_valid(self):
+        data = {'country':'India', 'state':'MH', 'region':'Pune'}
+        form = LocationForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_LocationForm_invalid(self):
+        data = {'country':'India', 'state':'', 'region':'Pune'}
+        form = LocationForm(data=data)
+        self.assertFalse(form.is_valid())
     #def RegistrationForm(self):
     #    data = {'email':'test@gmail.com','username':, 'first_name', 'last_name', 'email', 'password1', 'password2'}
 
