@@ -194,7 +194,7 @@ def privateEventCollection(request):
                     allEvents.append(event['id'])
                 #events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
-            return HttpResponse(status=404)
+            return Response(None)
         allEventsObj = Events.objects.filter(id__in=allEvents)
         serializer = EventSerializer(allEventsObj, many=True)
         return Response(serializer.data)

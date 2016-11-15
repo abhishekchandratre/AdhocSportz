@@ -22,15 +22,17 @@ def create_user_with_all_details(request):
     #  Update the users in this list.
     #  Each tuple represents the username, password, and email of a user.
     users = [
-        ('user1', 'qwerasdf', 'user_1@example.com'),
-        ('user2', 'qwerasdf', 'user_2@example.com'),
-        ('user3', 'qwerasdf', 'user_3@example.com'),
+        ('user1', 'qwerasdf', 'user_1@example.com', 'Abhishek', 'Chandratre'),
+        ('user2', 'qwerasdf', 'user_2@example.com', 'Sampath', 'Kumar'),
+        ('user3', 'qwerasdf', 'user_3@example.com', 'Chinmay', 'Rawool'),
+        ('user4', 'qwerasdf', 'user_3@example.com', 'Sravani', 'Kannelur'),
     ]
 
-    for username, password, email in users:
+    for username, password, email, first_name, last_name in users:
         print('Creating user {0}.'.format(username))
         user = User.objects.create_user(username, email,password)
-        user.last_name = username
+        user.last_name = last_name
+        user.first_name = first_name
         user.save()
         print('User {0} successfully created.'.format(username))
         userInfo = UserInfo(gender='F', user=user, birthDate=datetime.date.today(),
@@ -45,11 +47,11 @@ def create_user_with_all_details(request):
         userInfo.sports.add(sport3)
         userInfo.save()
         events = [
-            (user, sport1, username +  'Skiiiiing Challenge', 'Winter is coming',
+            (user, sport1, 'Skiiiiing Challenge by' + first_name, 'Winter is coming',
              datetime.date.today(),location1,10,'Public'),
-            (user, sport2, username + 'Judo Challenge', 'Let\'s fight',
+            (user, sport2, 'Private Judo Challenge' + first_name, 'Let\'s fight',
              datetime.date.today(),location2,10,'Private'),
-            (user, sport3, username + 'Polo Challenge', 'Polo Challenge',
+            (user, sport3, 'Polo Challenge' + first_name, 'Polo Challenge',
              datetime.date.today(),location3,10,'Public')
         ]
 
