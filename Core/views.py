@@ -171,7 +171,7 @@ def eventCollection(request):
     if request.method == 'GET':
         try:
             criterion1 = ~Q(owner_id=request.user.id)
-            events = Events.objects.filter(criterion1)
+            events = Events.objects.filter(criterion1).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
@@ -184,7 +184,7 @@ def privateEventCollection(request):
         try:
             criterion1 = ~Q(owner_id=request.user.id)
             criterion2 = ~Q(eventType='Public')
-            events = Events.objects.filter(criterion1 & criterion2)
+            events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
@@ -197,7 +197,7 @@ def publicEventCollection(request):
         try:
             criterion1 = ~Q(owner_id=request.user.id)
             criterion2 = ~Q(eventType='Private')
-            events = Events.objects.filter(criterion1 & criterion2)
+            events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
