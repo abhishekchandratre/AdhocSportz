@@ -40,6 +40,7 @@ class UserInfoForm(forms.ModelForm):
         model = UserInfo
         fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
         widgets = {'birthDate': extras.SelectDateWidget(years=range(1970, 2016))}
+        #widgets = {'birthDate': forms.DateInput(attrs={'class':'datepicker'})}
 
 
 class SportsInterestForm(forms.Form):
