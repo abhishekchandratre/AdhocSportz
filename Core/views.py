@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from itertools import chain
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends
@@ -184,10 +185,20 @@ def privateEventCollection(request):
         try:
             criterion1 = ~Q(owner_id=request.user.id)
             criterion2 = ~Q(eventType='Public')
-            events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
+            userFriends = UserFriends.objects.filter(user=request.user)
+            allEvents = []
+            for friends in userFriends.prefetch_related('friends'):
+                for friend in friends:
+                    user = User.objects.get(id=friend.id)
+                    print(user)
+                    events = Events.objects.filter(owner=user,eventType='Private').values()
+                    for event in events:
+                        allEvents.append(event['id'])
+                    #events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
-        serializer = EventSerializer(events, many=True)
+        allEventsObj = Events.objects.filter(id__in=allEvents)
+        serializer = EventSerializer(allEventsObj, many=True)
         return Response(serializer.data)
 
 
