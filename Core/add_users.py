@@ -45,11 +45,11 @@ def create_user_with_all_details(request):
         userInfo.sports.add(sport3)
         userInfo.save()
         events = [
-            (user, sport1, username +  'Skiiiiing Challenge', 'Come join us, winter is coming',
+            (user, sport1, username +  'Skiiiiing Challenge', 'Winter is coming',
              datetime.date.today(),location1,10,'Public'),
-            (user, sport2, username + 'Judo Challenge', 'Come join us, Let\'s fight',
+            (user, sport2, username + 'Judo Challenge', 'Let\'s fight',
              datetime.date.today(),location2,10,'Private'),
-            (user, sport3, username + 'Polo Challenge', 'Come join us, lets polo',
+            (user, sport3, username + 'Polo Challenge', 'Polo Challenge',
              datetime.date.today(),location3,10,'Public')
         ]
 
