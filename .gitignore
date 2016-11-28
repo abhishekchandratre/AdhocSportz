@@ -1,1 +1,7 @@
-.*ml
+tags
+.idea/
+db.sqlite3
+Core/migrations/
+htmlcov/
+chromedriver
+geckodriver.log
