@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
 from itertools import chain
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
@@ -180,6 +182,20 @@ def eventCollection(request):
         return Response(serializer.data)
 
 
+@login_required
+def eventApprove(request):
+    if request.method == 'GET':
+        userEvents = []
+        userPlayers = []
+        events = Events.objects.filter(owner=request.user.id).values()
+        for event in events:
+            userEvents.append(event['id'])
+        allUsers = EventPlayers.objects.filter(event_id__in=userEvents).values()
+        for user in allUsers:
+            userPlayers.append(user['players_id'])
+        users = User.objects.filter(id__in=userPlayers).values()
+        return render_to_response("core/register/eventApprove.html", {'users':users,'events':events,'eventPlayers':allUsers})
+
 @api_view(['GET'])
 def privateEventCollection(request):
     if request.method == 'GET':
@@ -269,10 +285,42 @@ def eventView(request):
 def eventJoin(request):
     if request.is_ajax():
         eventplayers = EventPlayers.objects.create(
-            event_id=request.POST['event'],
+            event_id=request.POST['eventID'],
+            eventName=request.POST['eventName'],
             players_id=request.user.id
         )
         eventplayers.save()
+        playerID = request.user.id
+        event = Events.objects.get(id=request.POST['eventID'])
+        user = User.objects.get(id=playerID)
+        subject = 'Thanks for joining the event: '+event.name+' '+ user.get_full_name()
+        message = 'Welcome to the event '+ event.name +' happening at '+event.location.state+'!! We will get back to you soon once the event owner approves your request. \n Till then keep looking out for other events. \n Thanks, \n AdhocSports Team'
+        from_email = settings.EMAIL_HOST_USER
+        to_list = [user.email]
+        send_mail(subject,message,from_email,to_list,fail_silently=True)
+        #send_mail(subject,message,from_email,to_list,fail_silently=true)
+        return HttpResponseRedirect('/core/')
+
+@login_required
+@csrf_exempt
+def eventApproval(request):
+    if request.is_ajax():
+        eventplayers = EventPlayers.objects.get(
+            id = request.POST['eventPlayerID'])
+        eventplayers.approvalStatus = request.POST['approval']
+        eventplayers.save()
+        event = Events.objects.get(id=eventplayers.event_id)
+        user = User.objects.get(id=eventplayers.players_id)
+        if request.POST['approval'] == 'approve':
+            subject = 'Congrats!! You have been approved for the event: '+event.name+' '
+            message = 'Welcome '+ user.get_full_name() +'to the event '+ event.name +' happening at '+event.location.state+'!! It\'s going to be a fun-filled event. \n Come on champ, Let\'s make this event a great success!!! . \n Thanks, \n AdhocSports Team'
+        else:
+            subject = 'Event owner has turned down your request for the event: ' + event.name + ' '
+            message = 'Thanks for your Interest '+ user.get_full_name()+ '!! We hate to say NO to your request but the slots have been filled already \n I would recommend you to try other events happening at your location. Let\'s meet up soon!!! . \n Thanks, \n AdhocSports Team'
+        from_email = settings.EMAIL_HOST_USER
+        to_list = [user.email]
+        send_mail(subject,message,from_email,to_list,fail_silently=True)
+        #send_mail(subject,message,from_email,to_list,fail_silently=true)
         return HttpResponseRedirect('/core/')
 
 

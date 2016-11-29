@@ -23,8 +23,8 @@ def create_user_with_all_details(request):
     #  Update the users in this list.
     #  Each tuple represents the username, password, and email of a user.
     users = [
-        ('user1', 'qwerasdf', 'user_1@example.com', 'Abhishek', 'Chandratre'),
-        ('user2', 'qwerasdf', 'user_2@example.com', 'Sampath', 'Kumar'),
+        ('user1', 'qwerasdf', 'wermsam92@gmail.com', 'Abhishek', 'Chandratre'),
+        ('user2', 'qwerasdf', 'wermsam92@gmail.com', 'Sampath', 'Kumar'),
         ('user3', 'qwerasdf', 'user_3@example.com', 'Chinmay', 'Rawool'),
         ('user4', 'qwerasdf', 'user_3@example.com', 'Sravani', 'Kannelur'),
     ]

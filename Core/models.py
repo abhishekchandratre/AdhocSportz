@@ -75,6 +75,8 @@ class UserFriends(models.Model):
 class EventPlayers(models.Model):
     event = models.ForeignKey(Events)
     players = models.ForeignKey(UserInfo)
+    eventName = models.CharField(max_length=80)
+    approvalStatus = models.CharField(max_length=20,null=True)
 
     class Meta:
-        unique_together = ('event', 'players')
+        unique_together = ('eventName', 'players')

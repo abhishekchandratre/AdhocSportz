@@ -84,6 +84,12 @@ DATABASES = {
     }
 }
 
+# Email sending
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'adhocsports@gmail.com'
+EMAIL_HOST_PASSWORD = 'adhocsportsisthebest'
+EMAIL_PORT = 587
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

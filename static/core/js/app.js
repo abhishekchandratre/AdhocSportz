@@ -67,22 +67,56 @@ sportsApp.controller('eventControl',['$scope','$http',
         }
         }
 
-        $scope.submit = function(value){
+        $scope.submit = function(value1,value2){
+
             $.ajax({
             type: 'POST',
             url: '/core/event/join',
             data: {
-                event: value,
+                eventName: value1,
+                eventID: value2,
                 //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function () {
-                var element = document.querySelector("#eventButton"+value);
+                alert("successs")
+                var element = document.querySelector("#eventButton"+value2);
                 element.setAttribute("disabled","disabled");
             }
         });
         }
     }
     ]);
+
+sportsApp.controller('approveControl',['$scope','$http',
+    function approveControl ($scope,$http) {
+        $scope.submit = function (value, value2) {
+            alert("controller");
+            alert(value)
+            alert(value2);
+            $.ajax({
+                type: 'POST',
+                url: '/core/event/approve',
+                data: {
+                    eventPlayerID: value,
+                    approval: value2,
+                    //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function () {
+                    alert("successs")
+                    if (value2 == "approve") {
+                        alert("approve")
+                        var element = document.querySelector("#approve" + value);
+                        element.setAttribute("disabled", "disabled");
+                    } else {
+                        var element = document.querySelector("#reject" + value);
+                        element.setAttribute("disabled", "disabled");
+                    }
+                }
+            });
+        }
+    }
+    ]);
+
 
 sportsApp.controller('eventView',['$scope','$http',
     function eventView ($scope,$http) {
