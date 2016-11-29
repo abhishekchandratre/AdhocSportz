@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h1 align="center">Approve/Reject Requests</h1>
+<h1 align="center" style="font-style: italic;font-weight: 900;color:darkslategrey">Approve/Reject Requests</h1>
 <div ng-controller="approveControl" class="container">
 <div class="row">
 {% for user in users %}
       {% for eventPlayer in eventPlayers %}
-          <div class="col-sm-8">
+          <div class="col-sm-8 well well-lg">
           {% if eventPlayer.players_id == user.id %}
-              <li>Event Name: {{ eventPlayer.eventName }}</li>
-                    <p><b>Player Name: {{ user.first_name }}</b></p>
-               <button id="approve{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"approve") class="btn btn-primary btn-success">Accept</button>
-              <button id="reject{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"reject") class="btn btn-primary btn-danger">Reject</button>
+              <p><b>Event Name: {{ eventPlayer.eventName }}</b></p>
+                    <p><b>Player First Name: {{ user.first_name }}</b></p>
+                    <p><b>Player Last Name: {{ user.last_name }}</b></p>
+                    <p><b>Player UserName: {{ user.username }}</b></p>
+               <button id="approve{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"approve") class="btn btn-primary btn-lg btn-success">Accept</button>
+              <button id="reject{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"reject") class="btn btn-primary btn-lg btn-danger">Reject</button>
           {% endif %}
           </div>
   {% endfor %}

@@ -90,9 +90,6 @@ sportsApp.controller('eventControl',['$scope','$http',
 sportsApp.controller('approveControl',['$scope','$http',
     function approveControl ($scope,$http) {
         $scope.submit = function (value, value2) {
-            alert("controller");
-            alert(value)
-            alert(value2);
             $.ajax({
                 type: 'POST',
                 url: '/core/event/approve',
@@ -102,9 +99,8 @@ sportsApp.controller('approveControl',['$scope','$http',
                     //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 },
                 success: function () {
-                    alert("successs")
+                    alert("Email sent to the user!!")
                     if (value2 == "approve") {
-                        alert("approve")
                         var element = document.querySelector("#approve" + value);
                         element.setAttribute("disabled", "disabled");
                     } else {
