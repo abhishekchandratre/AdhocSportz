@@ -9,6 +9,9 @@
           <div class="row">
             <div class="col-xs-6 col-lg-4" ng-repeat="friend in searchUsers">
               <h2>{[{ friend.user.last_name }]}, {[{ friend.user.first_name }]}</h2>
+                <div>
+                    <a href="" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="link"><img src="{[{ friend.profilePicture }]}" class="img-thumbnail" ></a>
+                </div>
 			  <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
               </p>
 			  <!-- Modal -->
