@@ -1,18 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <div ng-controller="searchControl" class="container" data-something = {{ searchStr }}>
-     <div class="row">
-        <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
-          </p>
           <div class="row">
             <div class="col-xs-6 col-lg-4" ng-repeat="friend in searchUsers">
               <h2>{[{ friend.user.last_name }]}, {[{ friend.user.first_name }]}</h2>
                 <div>
                     <a href="" data-toggle="modal" data-target="#myModal{[{ event.id }]}" role="link"><img src="{[{ friend.profilePicture }]}" class="img-thumbnail" ></a>
                 </div>
-			  <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
+			  <p><a class="btn btn-primary btn-default" style="width:209px;" data-toggle="modal" data-target="#myModal{[{ friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
               </p>
 			  <!-- Modal -->
 				<div class="modal fade text-center" id="myModal{[{ friend.user.username }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -41,7 +36,5 @@
           </div>
               </div>
 
-      </div>
-    </div>
 {% endblock %}
 
