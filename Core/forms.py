@@ -38,7 +38,7 @@ class LoginForm(forms.Form):
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
-        fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus')
+        fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus','profilePicture')
         widgets = {'birthDate': extras.SelectDateWidget(years=range(1970, 2016))}
         #widgets = {'birthDate': forms.DateInput(attrs={'class':'datepicker'})}
 

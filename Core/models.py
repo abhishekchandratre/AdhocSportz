@@ -18,7 +18,7 @@ class Location(models.Model):
 class Sports(models.Model):
     sportName = models.CharField(max_length=140)
     sportType = models.ForeignKey('SportsType')
-    sportImage = models.FileField(upload_to='sport_img/',null=True)
+    sportImage = models.FileField(upload_to='sport_img/', null=True)
 
     def __str__(self):
         return self.sportName
@@ -34,11 +34,11 @@ class UserInfo(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
     birthDate = models.DateField(auto_now=False, auto_now_add=False)
     phoneRegex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phoneNumber = models.CharField(validators=[phoneRegex], blank=True,max_length=16)
+                                message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phoneNumber = models.CharField(validators=[phoneRegex], blank=True, max_length=16)
     oneLinerStatus = models.CharField(max_length=140)
     location = models.ForeignKey(Location, null=True)
-    #profilePicture = models.ImageField(null=True)
+    profilePicture = models.ImageField(upload_to='profile_img', default='profile_img/default.png')
     sports = models.ManyToManyField(Sports)
 
     def __str__(self):
@@ -65,18 +65,19 @@ class Events(models.Model):
         ('Private', 'Private'),
     )
     eventType = models.CharField(max_length=10, choices=EVENT_CHOICE)
-    #EventPicture = models.ImageField(null=True)
+    # EventPicture = models.ImageField(null=True)
 
 
 class UserFriends(models.Model):
     user = models.OneToOneField(User)
     friends = models.ManyToManyField(UserInfo)
 
+
 class EventPlayers(models.Model):
     event = models.ForeignKey(Events)
     players = models.ForeignKey(UserInfo)
     eventName = models.CharField(max_length=80)
-    approvalStatus = models.CharField(max_length=20,null=True)
+    approvalStatus = models.CharField(max_length=20, null=True)
 
     class Meta:
         unique_together = ('eventName', 'players')

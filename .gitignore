@@ -5,3 +5,4 @@ Core/migrations/
 htmlcov/
 chromedriver
 geckodriver.log
+media/profile_img/

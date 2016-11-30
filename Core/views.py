@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
+import subprocess
 from itertools import chain
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
@@ -70,7 +71,10 @@ def registerUserInfo(request):
                 region=request.POST['city']
             )
             userInfoObj.location = location
+            userInfoObj.profilePicture = request.FILES['profilePicture']
+            userInfoObj.profilePicture.name = userInfoObj.user.username
             userInfoObj.save()
+            subprocess.call(["./scripts/resize_img.sh", userInfoObj.profilePicture.path, ])
             return HttpResponseRedirect('/core/register/sportsInterest')
 
     else:
