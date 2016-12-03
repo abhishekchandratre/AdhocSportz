@@ -345,9 +345,9 @@ def friendsprofileView(request, pk):
 def connect(request):
     if request.is_ajax():
         friend = User.objects.get(id=request.POST['friends'])
-        friendObj = UserInfo.objects.get(user=friend)
+        userInfoObj = UserInfo.objects.get(user=request.user)
         userFriendObj = UserFriends.objects.create(
-            user=request.user, friend=friendObj, approvalStatus='U')
+            user=friend, friend=userInfoObj, approvalStatus='U')
         userFriendObj.save()
         return HttpResponseRedirect('/core/')
 
