@@ -78,7 +78,6 @@ sportsApp.controller('eventControl',['$scope','$http',
                 //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function () {
-                alert("successs")
                 var element = document.querySelector("#eventButton"+value2);
                 element.setAttribute("disabled","disabled");
             }
