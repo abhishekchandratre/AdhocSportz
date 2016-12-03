@@ -10,7 +10,7 @@
                             <img src="{[{ element.friend.profilePicture }]}" class="img-thumbnail" >
                             <p>
                                 <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ element.friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
-                                </br><span><a class="btn-info" ng-click=acceptUser(element.friend.user.id)>Accept</a><a class="btn-danger" ng-click=rejectUser(element.friend.user.id)>Reject</a></span>
+                                </br><span><a class="btn btn-primary btn-success" role="button" ng-click=acceptUser(element.friend.user.id)>Accept</a><a class="btn btn-primary btn-danger" role="button" ng-click=rejectUser(element.friend.user.id)>Reject</a></span>
                             </p>
                             <!-- Modal -->
                             <div class="modal fade text-center" id="myModal{[{ element.friend.user.username }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
