@@ -5,12 +5,16 @@
 <div ng-controller="ratingControl" class="container">
 <div class="row lead">
 <ul>
+{% if users %}
 {% for user in users %}
           <div class="col-sm-8">
               <li><p><b>{{ user.first_name }},{{ user.last_name }}</b></p>
                 <div id="stars{{ user.id }}" class="starrr" ng-model="rating" ng-click="ratingValue('{{ user.id }}')"></div>
              </li></div>
   {% endfor %}
+{% else %}
+<div class="jumbotron"><h2 align="center"> There are no players in this event!!</h2></div>
+{% endif %}
 </ul>
 </div>
 </div>
