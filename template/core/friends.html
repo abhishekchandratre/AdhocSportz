@@ -1,44 +1,85 @@
 {% extends "base.html" %}
 {% block content %}
     <div ng-controller="friendsControl" class="container" data-something = {{ userId }}>
-     <div class="row">
-        <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
-          </p>
-          <div class="row">
-            <div class="col-xs-6 col-lg-4" ng-repeat="friend in userFriendsDetail.friends">
-              <h2>{[{ friend.user.last_name }]}, {[{ friend.user.first_name }]}</h2>
-                <img src="{[{ friend.profilePicture }]}" class="img-thumbnail" >
-			  <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
-              </p>
-			  <!-- Modal -->
-				<div class="modal fade text-center" id="myModal{[{ friend.user.username }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-					<div class="modal-content">
-					<div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title">{[{ friend.user.last_name }]}, {[{ friend.user.first_name }]}</h4>
-            </div>			<!-- /modal-header -->
-            <div class="modal-body" style="height:450px">
-                <p>Username: {[{ friend.user.username }]}</p>
-                <p>OneLiner: {[{ friend.oneLinerStatus }]}</p>
-                <p>Email: {[{ friend.user.email }]}</p>
-                <p>PhoneDetails: {[{ friend.phoneNumber }]}</p>
-                <p>Location: {[{ friend.location.country }]},{[{ friend.location.state }]},{[{ friend.location.region }]}</p>
-            </div>			<!-- /modal-body -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <div class="row">
+            <div style="white-space: nowrap;">
+                <div ng-repeat="element in userFriendsDetail">
+                    <div style="display: inline-block;">
+                        <div ng-if="element.approvalStatus == 'U'">
+                            <h2>{[{ element.friend.user.last_name }]},{[{ element.friend.user.first_name }]}</h2>
+                            <img src="{[{ element.friend.profilePicture }]}" class="img-thumbnail" >
+                            <p>
+                                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ element.friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
+                                </br><span><a class="btn-info" ng-click=acceptUser(element.friend.user.id)>Accept</a><a class="btn-danger" ng-click=rejectUser(element.friend.user.id)>Reject</a></span>
+                            </p>
+                            <!-- Modal -->
+                            <div class="modal fade text-center" id="myModal{[{ element.friend.user.username }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">{[{ element.friend.user.last_name }]}, {[{ element.friend.user.first_name }]}</h4>
+                                        </div>			<!-- /modal-header -->
+                                        <div class="modal-body" style="height:450px">
+                                            <p>Username: {[{ element.friend.user.username }]}</p>
+                                            <p>OneLiner: {[{ element.friend.oneLinerStatus }]}</p>
+                                            <p>Email: {[{ element.friend.user.email }]}</p>
+                                            <p>PhoneDetails: {[{ element.friend.phoneNumber }]}</p>
+                                            <p>Location: {[{ element.friend.location.country }]},{[{ element.friend.location.state }]},{[{ element.friend.location.region }]}</p>
+                                        </div>			<!-- /modal-body -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
+                                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                        </div>
+                                    </div> <!-- /.modal-content -->
+                                </div> <!-- /.modal-dialog -->
+                            </div> <!-- /.modal -->
+                        </div>
+                    </div>
+                </div>
             </div>
-				</div> <!-- /.modal-content -->
-    </div> <!-- /.modal-dialog -->
-</div> <!-- /.modal -->
-            </div><!--/.col-xs-6.col-lg-4-->
-          </div>
-              </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <p class="pull-right visible-xs">
+                    <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Click to Expand</button>
+                </p>
+                <div class="row">
+                    <div class="col-xs-6 col-lg-4" ng-repeat="element in userFriendsDetail">
+                        <div ng-if="element.approvalStatus == 'A'">
+                        <h2>{[{ element.friend.user.last_name }]},{[{ element.friend.user.first_name }]}</h2>
+                        <img src="{[{ element.friend.profilePicture }]}" class="img-thumbnail" >
+                        <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{[{ element.friend.user.username }]}" role="button"> <span class="glyphicon glyphicon-new-window"></span> View Details &raquo;</a>
+                        </p>
+                        <!-- Modal -->
+                        <div class="modal fade text-center" id="myModal{[{ element.friend.user.username }]}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">{[{ element.friend.user.last_name }]}, {[{ element.friend.user.first_name }]}</h4>
+                                    </div>			<!-- /modal-header -->
+                                    <div class="modal-body" style="height:450px">
+                                        <p>Username: {[{ element.friend.user.username }]}</p>
+                                        <p>OneLiner: {[{ element.friend.oneLinerStatus }]}</p>
+                                        <p>Email: {[{ element.friend.user.email }]}</p>
+                                        <p>PhoneDetails: {[{ element.friend.phoneNumber }]}</p>
+                                        <p>Location: {[{ element.friend.location.country }]},{[{ element.friend.location.state }]},{[{ element.friend.location.region }]}</p>
+                                    </div>			<!-- /modal-body -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
+                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                    </div>
+                                </div> <!-- /.modal-content -->
+                            </div> <!-- /.modal-dialog -->
+                        </div> <!-- /.modal -->
+                        </div>
+                    </div><!--/.col-xs-6.col-lg-4-->
+                </div>
+            </div>
 
-      </div>
+        </div>
     </div>
 {% endblock %}
 

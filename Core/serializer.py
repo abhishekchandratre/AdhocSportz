@@ -59,8 +59,8 @@ class EventInfoSerializer(serializers.ModelSerializer):
 
 
 class UserFriendsSerializer(serializers.ModelSerializer):
-    friends = UserInfoSerializer(read_only=True, many=True)
+    friend = UserInfoSerializer()
 
     class Meta:
         model = UserFriends
-        fields = ('friends',)
+        fields = ('friend', 'approvalStatus')

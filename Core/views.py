@@ -22,8 +22,7 @@ from .serializer import EventSerializer, UserSerializer, UserInfoSerializer, Spo
 # Create your views here.
 @login_required
 def index(request):
-    token = {}
-    token['fullname'] = request.user
+    token = {'fullname': request.user}
     return render_to_response("core/index.html", token)
 
 
@@ -206,16 +205,13 @@ def eventApprove(request):
 def privateEventCollection(request):
     if request.method == 'GET':
         try:
-            criterion1 = ~Q(owner_id=request.user.id)
-            criterion2 = ~Q(eventType='Public')
-            userFriends = UserFriends.objects.get(user=request.user)
+            userFriends = UserFriends.objects.filter(user=request.user)
             allEvents = []
-            for friend in userFriends.friends.all():
-                user = User.objects.get(id=friend.id)
+            for row in userFriends:
+                user = User.objects.get(id=row.friend.id)
                 events = Events.objects.filter(owner=user, eventType='Private').values()
                 for event in events:
                     allEvents.append(event['id'])
-                    # events = Events.objects.filter(criterion1 & criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return Response(None)
         allEventsObj = Events.objects.filter(id__in=allEvents)
@@ -350,20 +346,33 @@ def connect(request):
     if request.is_ajax():
         friend = User.objects.get(id=request.POST['friends'])
         friendObj = UserInfo.objects.get(user=friend)
-        try:
-            userFriends = UserFriends.objects.get(
-                user=request.user
-            )
-            userFriends.friends.add(friendObj)
-            userFriends.save()
-        except:
-            userFriends = UserFriends.objects.create(
-                user=request.user)
-            userFriends.save()
-            userFriends.friends.add(friendObj)
-            userFriends.save()
+        userFriendObj = UserFriends.objects.create(
+            user=request.user, friend=friendObj, approvalStatus='U')
+        userFriendObj.save()
         return HttpResponseRedirect('/core/')
 
+@login_required
+@csrf_exempt
+def acceptUser(request):
+    if request.is_ajax():
+        friend = User.objects.get(id=request.POST['id'])
+        friendObj = UserInfo.objects.get(user=friend)
+        user = request.user.id
+        userFriend1 = UserFriends.objects.get(user=user, friend=friendObj)
+        userFriend1.approvalStatus = 'A'
+        userFriend1.save()
+        return HttpResponseRedirect('/core/')
+
+@login_required
+@csrf_exempt
+def rejectUser(request):
+    if request.is_ajax():
+        friend = User.objects.get(id=request.POST['id'])
+        friendObj = UserInfo.objects.get(user=friend)
+        user = request.user.id
+        userFriend1 = UserFriends.objects.get(user=user, friend=friendObj)
+        userFriend1.delete()
+        return HttpResponseRedirect('/core/')
 
 @login_required
 def eventMap(request):
@@ -413,37 +422,27 @@ def sportCollection(request):
 
 @api_view(['GET'])
 def userFriends(request, pk):
-    # user = User.objects.get(id=request.user.id)
-    # user = User.objects.get(id=1)
-    # user2 = UserInfo.objects.get(user_id=2)
-    # user3 = UserInfo.objects.get(user_id=3)
-    # userFriends = UserFriends.objects.get(user=user)
-    # userFriends.save()
-    # userFriends.friends.add(user2)
-    # userFriends.friends.add(user3)
-    # userFriends.save()
     if request.method == 'GET':
         user = User.objects.get(id=pk)
-        userObj = UserFriends.objects.get(user=user)
-        serialize = UserFriendsSerializer(userObj)
+        userObj = UserFriends.objects.filter(user=user)
+        serialize = UserFriendsSerializer(userObj, many=True)
+        print(serialize.data)
         return Response(serialize.data)
 
 
 @api_view(['GET'])
-def searchUsers(request, str):
+def searchUsers(request, searchStr):
     if request.method == 'GET':
         userObj = UserInfo.objects.filter(
-            Q(user__username__contains=str) |
-            Q(user__first_name__contains=str))
+            Q(user__username__contains=searchStr) |
+            Q(user__first_name__contains=searchStr))
         serialize = UserInfoSerializer(userObj, many=True)
         return Response(serialize.data)
 
 
 @login_required
 def userFriendsView(request):
-    token = {}
-    token['fullname'] = request.user
-    token['userId'] = request.user.id
+    token = {'fullname': request.user, 'userId': request.user.id}
     return render_to_response("core/friends.html", token)
 
 
@@ -451,6 +450,5 @@ def userFriendsView(request):
 @csrf_exempt
 def search(request):
     if request.method == 'POST':
-        context = {}
-        context['searchStr'] = request.POST['searchStr']
+        context = {'searchStr': request.POST['searchStr']}
         return render_to_response("core/search.html", context)

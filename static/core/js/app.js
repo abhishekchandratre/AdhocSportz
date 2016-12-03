@@ -137,6 +137,30 @@ sportsApp.controller('friendsControl',['$scope','$http', '$attrs',
         $http.get('/core/api/friends/' + userID).success(function(data) {
             $scope.userFriendsDetail = data;
         });
+        $scope.acceptUser = function (value) {
+            $.ajax({
+                type: 'POST',
+                url: 'core/user/accept',
+                data: {
+                    id: value,
+                },
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
+        $scope.rejectUser = function (value) {
+            $.ajax({
+                type: 'POST',
+                url: 'core/user/reject',
+                data: {
+                    id: value,
+                },
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
     }
     ]);
 

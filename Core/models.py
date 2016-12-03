@@ -69,8 +69,14 @@ class Events(models.Model):
 
 
 class UserFriends(models.Model):
-    user = models.OneToOneField(User)
-    friends = models.ManyToManyField(UserInfo)
+    user = models.ForeignKey(User)
+    friend = models.ForeignKey(UserInfo)
+    APPROVAL_CHOICE = (
+        ('A', 'Approved'),
+        ('R', 'Rejected'),
+        ('U', 'Unknown'),
+    )
+    approvalStatus = models.CharField(max_length=20, choices=APPROVAL_CHOICE)
 
 
 class EventPlayers(models.Model):
