@@ -357,10 +357,12 @@ def acceptUser(request):
     if request.is_ajax():
         friend = User.objects.get(id=request.POST['id'])
         friendObj = UserInfo.objects.get(user=friend)
-        user = request.user.id
+        user = request.user
+        userObj = UserInfo.objects.get(user=user)
         userFriend1 = UserFriends.objects.get(user=user, friend=friendObj)
         userFriend1.approvalStatus = 'A'
         userFriend1.save()
+        UserFriends.objects.create(user=friend, friend=userObj, approvalStatus='A').save()
         return HttpResponseRedirect('/core/')
 
 @login_required
