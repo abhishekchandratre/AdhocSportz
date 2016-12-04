@@ -78,7 +78,6 @@ sportsApp.controller('eventControl',['$scope','$http',
                 //csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function () {
-                alert("successs")
                 var element = document.querySelector("#eventButton"+value2);
                 element.setAttribute("disabled","disabled");
             }
@@ -164,6 +163,9 @@ sportsApp.controller('friendsControl',['$scope','$http', '$attrs',
     }
     ]);
 
+
+
+
 sportsApp.controller('searchControl',['$scope','$http', '$attrs',
     function searchControl ($scope,$http,$attrs) {
         var string = $attrs.something;
@@ -185,3 +187,55 @@ sportsApp.controller('searchControl',['$scope','$http', '$attrs',
         }
     }
 ]);
+
+sportsApp.controller('ratingControl',['$scope','$http',
+    function ratingControl ($scope,$http) {
+        $scope.ratingValue = function (user) {
+          $('#stars'+user).on('starrr:change', function(e, value){
+                $.ajax({
+            type: 'POST',
+            url: '/core/user/rating',
+            data: {
+                rating: value,
+                user: user,
+            },
+            success: function () {
+                alert("rating success");
+            }
+        });
+          })
+        }
+}
+]);
+
+/*
+$( document ).ready(function() {
+  $('#stars').on('starrr:change', function(e, value){
+       alert("rating");
+      alert(value)
+       $.ajax({
+            type: 'POST',
+            url: '/core/user/rating',
+            data: {
+                rating: value,
+            },
+            success: function () {
+                alert("rating success");
+            }
+        });
+        $('#count').html(value);
+  });
+});
+*/
+
+/*
+sportsApp.controller('ratingControl',['$scope','$http',
+    function ratingControl ($scope,$http) {
+        $scope.ratingValue = function (value) {
+            var element = document.getElementById("stars");
+            alert(element);
+        alert($scope.rating)
+        alert(value)
+        }
+}
+]);*/

@@ -164,7 +164,10 @@ def myEventCollection(request):
     if request.method == 'GET':
         print(Events.objects.filter(owner=request.user))
         try:
-            events = Events.objects.filter(owner_id=request.user.id).order_by('startDate').reverse()
+            eventID = EventPlayers.objects.filter(players=request.user.id).values('event_id')
+            criterion1 = Q(owner_id=request.user.id)
+            criterion2 = Q(id=eventID)
+            events = Events.objects.filter(criterion1 | criterion2).order_by('startDate').reverse()
         except Events.DoesNotExist:
             return HttpResponse(status=404)
         serializer = EventSerializer(events, many=True)
@@ -280,6 +283,20 @@ def eventView(request):
         print(request.user.id)
         return render_to_response("core/register/eventView.html", token)
 
+@login_required
+def eventPlayerView(request,pk):
+    if request.method == 'GET':
+        token = {}
+        token = dict()
+        players = []
+        token['id'] = request.user.id
+        event = Events.objects.get(id=pk)
+        eventPlayers = EventPlayers.objects.filter(event_id=pk).values()
+        for eventPlayer in eventPlayers:
+            players.append(eventPlayer['players_id'])
+        users = User.objects.filter(id__in=players).values()
+        return render_to_response("core/register/eventPlayerView.html", {'event':event,'users':users})
+
 
 @login_required
 @csrf_exempt
@@ -349,6 +366,15 @@ def connect(request):
             user=friend, friend=userInfoObj, approvalStatus='U')
         userFriendObj.save()
         return HttpResponseRedirect('/core/')
+
+@login_required
+@csrf_exempt
+def rating(request):
+    if request.is_ajax():
+        print(request.POST['rating'])
+        print(request.POST['user'])
+        return HttpResponseRedirect('/core/')
+
 
 @login_required
 @csrf_exempt
