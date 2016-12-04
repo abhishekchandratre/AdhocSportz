@@ -11,7 +11,6 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 import subprocess
-from itertools import chain
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends

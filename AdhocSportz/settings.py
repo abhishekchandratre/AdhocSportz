@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_comments',
     'Core',
     'bootstrap_toolkit',
     'widget_tweaks',
@@ -140,3 +142,6 @@ LOGIN_URL = '/core/accounts/login'
 # For media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+
+# For comments
+SITE_ID = 2
