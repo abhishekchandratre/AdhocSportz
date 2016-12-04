@@ -56,5 +56,10 @@
                </div>
 
   </form>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({yearRange: "-100:-10",changeYear:true, changeMonth:true});
+        });
+    </script>
 
 {% endblock %}
