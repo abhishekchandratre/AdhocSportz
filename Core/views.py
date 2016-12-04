@@ -6,12 +6,11 @@ from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 import subprocess
-from itertools import chain
 
 from .forms import RegistrationForm, LoginForm, SportsInterestForm, UserInfoForm, EventForm, LocationForm
 from .models import SportsType, Sports, UserInfo, Events, Location, EventPlayers, UserFriends
@@ -284,19 +283,21 @@ def eventView(request):
         print(request.user.id)
         return render_to_response("core/register/eventView.html", token)
 
+
 @login_required
-def eventPlayerView(request,pk):
+def eventPlayerView(request, pk):
     if request.method == 'GET':
-        token = {}
-        token = dict()
         players = []
-        token['id'] = request.user.id
+        context = dict()
         event = Events.objects.get(id=pk)
         eventPlayers = EventPlayers.objects.filter(event_id=pk).values()
         for eventPlayer in eventPlayers:
             players.append(eventPlayer['players_id'])
         users = User.objects.filter(id__in=players).values()
-        return render_to_response("core/register/eventPlayerView.html", {'event':event,'users':users})
+        context['users'] = users
+        context['event'] = event
+        context.update(csrf(request))
+        return render_to_response("core/register/eventPlayerView.html", context)
 
 
 @login_required
@@ -368,6 +369,7 @@ def connect(request):
         userFriendObj.save()
         return HttpResponseRedirect('/core/')
 
+
 @login_required
 @csrf_exempt
 def rating(request):
@@ -400,6 +402,7 @@ def acceptUser(request):
         UserFriends.objects.create(user=friend, friend=userObj, approvalStatus='A').save()
         return HttpResponseRedirect('/core/')
 
+
 @login_required
 @csrf_exempt
 def rejectUser(request):
@@ -410,6 +413,7 @@ def rejectUser(request):
         userFriend1 = UserFriends.objects.get(user=user, friend=friendObj)
         userFriend1.delete()
         return HttpResponseRedirect('/core/')
+
 
 @login_required
 def eventMap(request):

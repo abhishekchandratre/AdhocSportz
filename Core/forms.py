@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 from .models import Sports, UserInfo, Events, Location
 from django.forms import extras
+import datetime
 
 
 class RegistrationForm(UserCreationForm):
@@ -39,8 +40,14 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
         fields = ('gender', 'birthDate', 'phoneNumber', 'oneLinerStatus','profilePicture')
-        widgets = {'birthDate': extras.SelectDateWidget(years=range(1970, 2016))}
-        #widgets = {'birthDate': forms.DateInput(attrs={'class':'datepicker'})}
+        # widgets = {'birthDate': extras.SelectDateWidget(years=range(1970, 2016))}
+        widgets = {'birthDate': forms.DateInput(attrs={'class': 'datepicker'})}
+
+    def clean_birthDate(self):
+        date = self.cleaned_data['birthDate']
+        if date > datetime.date.today():
+            raise forms.ValidationError("Not Possible")
+        return date
 
 
 class SportsInterestForm(forms.Form):
@@ -69,13 +76,20 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Events
         fields = ('name', 'desc', 'sport', 'startDate', 'numberOfPlayers', 'eventType')
-        widgets = {'startDate': extras.SelectDateWidget(years=range(2016, 2020))}
+        # widgets = {'startDate': extras.SelectDateWidget(years=range(2016, 2020))}
+        widgets = {'startDate': forms.DateInput(attrs={'class': 'datepicker'})}
 
     def save(self,commit=True):
         event = super(EventForm, self).save(commit=False)
         if commit:
             event.save()
         return event
+
+    def clean_startDate(self):
+        date = self.cleaned_data['startDate']
+        if date < datetime.date.today():
+            raise forms.ValidationError("Event Cannot be in Past!")
+        return date
 
 
 class LocationForm(forms.ModelForm):
