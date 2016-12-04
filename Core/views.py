@@ -372,8 +372,17 @@ def connect(request):
 @csrf_exempt
 def rating(request):
     if request.is_ajax():
-        print(request.POST['rating'])
-        print(request.POST['user'])
+        userID = request.POST['user']
+        rating = request.POST['rating']
+        userInfo = UserInfo.objects.get(user_id=userID)
+        if userInfo.ratings == 0:
+            userInfo.ratings = rating
+            userInfo.save()
+        else:
+            currRating = userInfo.ratings
+            avgRating = (currRating + int(rating))/2
+            userInfo.ratings = avgRating
+            userInfo.save()
         return HttpResponseRedirect('/core/')
 
 
