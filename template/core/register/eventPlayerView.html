@@ -8,10 +8,12 @@
             <ul>
                 {% if users %}
                     {% for user in users %}
+                        {%  if user.username != rem_username %}
                         <div class="col-sm-8">
                             <li><p><b>{{ user.first_name }},{{ user.last_name }}</b></p>
                                 <div id="stars{{ user.id }}" class="starrr" ng-model="rating" ng-click="ratingValue('{{ user.id }}')"></div>
                             </li></div>
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <div class="jumbotron"><h2 align="center"> There are no players in this event!!</h2></div>
@@ -40,7 +42,9 @@
     <table>
         <form action="{% comment_form_target %}" method="post">
             {% csrf_token %}
+            <div class="jumbotron">
             {{ form.comment }}
+            </div>
             {{ form.honeypot }}
             {{ form.content_type }}
             {{ form.object_pk }}

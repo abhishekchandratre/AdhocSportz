@@ -102,9 +102,11 @@ sportsApp.controller('approveControl',['$scope','$http',
                     if (value2 == "approve") {
                         var element = document.querySelector("#approve" + value);
                         element.setAttribute("disabled", "disabled");
+                        location.reload()
                     } else {
                         var element = document.querySelector("#reject" + value);
                         element.setAttribute("disabled", "disabled");
+                        location.reload()
                     }
                 }
             });
