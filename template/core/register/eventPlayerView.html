@@ -19,7 +19,7 @@
             </ul>
         </div>
     </div>
-    <div class="container">
+    <div class="container" class="jumbotron">
         <b>Comments:</b></br>
     <table class="table-bordered">
         {% get_comment_list for event as comment_list %}
@@ -33,9 +33,9 @@
     </div>
     </br><hr>
 
-    <div class="container">
+    <div class="container" class="jumbotron">
     <b>Comment Here:</b></br>
-{#    {% render_comment_form for event %}#}
+{#    {% render_comment_form for evernt %}#}
     {%  get_comment_form for event as form %}
     <table>
         <form action="{% comment_form_target %}" method="post">
@@ -47,7 +47,7 @@
             {{ form.timestamp }}
             {{ form.security_hash }}
             <input type="hidden" name="next" value="{% url 'eventPlayerView' event.id %}" /></br>
-            <input type="submit" value="Add comment" id="id_submit" />
+            <input type="submit" value="Add comment" id="id_submit"  class="btn btn-primary btn-lg" />
         </form>
     </table>
     </div>

@@ -6772,3 +6772,9 @@ button.close {
 #id_honeypot {
   display: none;
 }
+
+#id_comment {
+  height: 100px;;
+  width:100%;
+
+}
