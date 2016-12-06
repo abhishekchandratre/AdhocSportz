@@ -304,10 +304,11 @@ def eventPlayerView(request, pk):
 @csrf_exempt
 def eventJoin(request):
     if request.is_ajax():
+        userInfoObj = UserInfo.objects.get(user=request.user)
         eventplayers = EventPlayers.objects.create(
             event_id=request.POST['eventID'],
             eventName=request.POST['eventName'],
-            players_id=request.user.id
+            players=userInfoObj
         )
         eventplayers.save()
         playerID = request.user.id
