@@ -313,6 +313,9 @@ def eventJoin(request):
             players=userInfoObj,
             approvalStatus ='U'
         )
+        event = Events.objects.get(id=request.POST['eventID'])
+        event.numberOfPlayers = event.numberOfPlayers - 1
+        event.save()
         print('saved')
         eventplayers.save()
         playerID = request.user.id
