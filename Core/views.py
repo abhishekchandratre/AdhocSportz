@@ -199,6 +199,7 @@ def eventApprove(request):
         for user in allUsers:
             userPlayers.append(user['players_id'])
         users = User.objects.filter(id__in=userPlayers).values()
+        print(allUsers)
         return render_to_response("core/register/eventApprove.html",
                                   {'users': users, 'events': events, 'eventPlayers': allUsers})
 
@@ -308,8 +309,10 @@ def eventJoin(request):
         eventplayers = EventPlayers.objects.create(
             event_id=request.POST['eventID'],
             eventName=request.POST['eventName'],
-            players=userInfoObj
+            players=userInfoObj,
+            approvalStatus ='U'
         )
+        print('saved')
         eventplayers.save()
         playerID = request.user.id
         event = Events.objects.get(id=request.POST['eventID'])
@@ -327,16 +330,21 @@ def eventJoin(request):
 @csrf_exempt
 def eventApproval(request):
     if request.is_ajax():
-        eventplayers = EventPlayers.objects.get(
-            id=request.POST['eventPlayerID'])
-        eventplayers.approvalStatus = request.POST['approval']
-        eventplayers.save()
-        event = Events.objects.get(id=eventplayers.event_id)
-        user = User.objects.get(id=eventplayers.players_id)
         if request.POST['approval'] == 'approve':
+            eventplayers = EventPlayers.objects.get(
+                id=request.POST['eventPlayerID'])
+            eventplayers.approvalStatus = 'A'
+            eventplayers.save()
+            event = Events.objects.get(id=eventplayers.event_id)
+            user = User.objects.get(id=eventplayers.players_id)
             subject = 'Congrats!! You have been approved for the event: ' + event.name + ' '
             message = 'Welcome ' + user.get_full_name() + 'to the event ' + event.name + ' happening at ' + event.location.state + '!! It\'s going to be a fun-filled event. \n Come on champ, Let\'s make this event a great success!!! . \n Thanks, \n AdhocSports Team'
         else:
+            eventplayers = EventPlayers.objects.get(
+                id=request.POST['eventPlayerID'])
+            event = Events.objects.get(id=eventplayers.event_id)
+            user = User.objects.get(id=eventplayers.players_id)
+            eventplayers.delete()
             subject = 'Event owner has turned down your request for the event: ' + event.name + ' '
             message = 'Thanks for your Interest ' + user.get_full_name() + '!! We hate to say NO to your request but the slots have been filled already \n I would recommend you to try other events happening at your location. Let\'s meet up soon!!! . \n Thanks, \n AdhocSports Team'
         from_email = settings.EMAIL_HOST_USER
