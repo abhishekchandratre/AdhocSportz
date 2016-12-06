@@ -51,9 +51,26 @@
                       </tr>
                     </tbody>
                   </table>
-                  <a href="#" class="btn btn-primary">My Sports Performance</a>
-                  <a href="#" class="btn btn-primary">Teams Involved</a>
+                    <span class="label label-danger ">User Ratings</span>
+                    <div style="float: right;width: 250px;">
+                    <div ng-if="userDetail.ratings == 5 ">
+                      <span class="stars" data-rating=5 data-num-stars=5 ></span>
                 </div>
+                <div ng-if="userDetail.ratings == 4 ">
+                      <span class="stars" data-rating=4 data-num-stars=5 ></span>
+                </div>
+                <div ng-if="userDetail.ratings == 3 ">
+                      <span class="stars" data-rating=3 data-num-stars=5 ></span>
+                </div>
+
+                <div ng-if="userDetail.ratings == 2 ">
+                      <span class="stars" data-rating=2 data-num-stars=5 ></span>
+                </div>
+                <div ng-if="userDetail.ratings == 1 ">
+                      <span class="stars" data-rating=1 data-num-stars=5 ></span>
+                </div>
+                </div>
+                    </div>
               </div>
             </div>
                  <div class="panel-footer">

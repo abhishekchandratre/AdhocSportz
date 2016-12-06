@@ -200,7 +200,6 @@ sportsApp.controller('ratingControl',['$scope','$http',
                 user: user,
             },
             success: function () {
-                alert("rating success");
             }
         });
           })

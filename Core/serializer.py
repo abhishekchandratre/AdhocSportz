@@ -36,7 +36,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserInfo
-        fields = ('user', 'gender', 'location', 'phoneNumber', 'oneLinerStatus', 'sports', 'profilePicture')
+        fields = ('user', 'gender', 'location', 'phoneNumber', 'oneLinerStatus', 'sports', 'profilePicture', 'ratings')
 
 
 class EventSerializer(serializers.ModelSerializer):
