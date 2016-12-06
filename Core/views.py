@@ -296,6 +296,7 @@ def eventPlayerView(request, pk):
         users = User.objects.filter(id__in=players).values()
         context['users'] = users
         context['event'] = event
+        context['rem_username'] = request.user.username
         context.update(csrf(request))
         return render_to_response("core/register/eventPlayerView.html", context)
 
