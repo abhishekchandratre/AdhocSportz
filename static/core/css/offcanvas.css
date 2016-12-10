@@ -25,7 +25,9 @@ body {
   position: absolute;
   z-index: -1;   
 }*/
-
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+}
 
 .tileStyle{
     margin-left: 49px;
