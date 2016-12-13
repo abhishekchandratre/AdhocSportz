@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div ng-controller="userControl" class="container" style ="height:95%" data-something={{ id }}>
+      <div class="row" style="height:inherit;">
+      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+       <br>
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{[{ userDetail.user.first_name }]}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="{[{ userDetail.profilePicture }]}" class="img-circle img-responsive"> </div>
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Gender</td>
+                        <td>{[{ userDetail.gender }]}</td>
+                      </tr>
+                      <tr>
+                        <td>Age</td>
+                        <td>23</td>
+                      </tr>
+                      <tr>
+                        <td>Region</td>
+                        <td>{[{ userDetail.location.country}]},{[{ userDetail.location.state}]},{[{ userDetail.location.region}]}</td>
+                      </tr>
+						<tr>
+                        <td>Email</td>
+                        <td><a href="mailto:info@support.com">{[{ userDetail.user.email}]}</a></td>
+                      </tr>
+					  <tr>
+                        <td>Phone Number</td>
+                        <td>{[{ userDetail.phoneNumber }]}(Mobile)
+                        </td>
+                           
+                      </tr>
+                     <tr>
+                        <td>Status</td>
+                        <td> {[{ userDetail.oneLinerStatus }]}
+                        </td>
+                           
+                      </tr>
+					  <tr ng-repeat="sport in userDetail.sports">
+                        <td>Sports Interested: </td><td>{[{ sport.sportName }]} under {[{ sport.sportType.categoryName }]} category
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <span class="label label-danger ">User Ratings</span>
+                    <div style="float: right;width: 250px;">
+                    <div ng-if="userDetail.ratings == 5 ">
+                      <span class="stars" data-rating=5 data-num-stars=5 ></span>
+                </div>
+                <div ng-if="userDetail.ratings == 4 ">
+                      <span class="stars" data-rating=4 data-num-stars=5 ></span>
+                </div>
+                <div ng-if="userDetail.ratings == 3 ">
+                      <span class="stars" data-rating=3 data-num-stars=5 ></span>
+                </div>
+
+                <div ng-if="userDetail.ratings == 2 ">
+                      <span class="stars" data-rating=2 data-num-stars=5 ></span>
+                </div>
+                <div ng-if="userDetail.ratings == 1 ">
+                      <span class="stars" data-rating=1 data-num-stars=5 ></span>
+                </div>
+                </div>
+                    </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <span class="pull-right">
+                            <a href="edit.html" data-original-title="Edit user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-original-title="Cancel" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        </span>
+                    </div>
+            
+          </div>
+        </div>
+      </div>
+
+{% endblock %}

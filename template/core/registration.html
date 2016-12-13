@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<h2 style="color:gray;" align="center">Ad Hoc Sports Registration!!</h2>
+	<div class="row">
+		<section>
+        <div class="wizard">
+            <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
+
+                    <li role="presentation" class="active">
+                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="disabled">
+                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-knight"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <form class="form-horizontal" role="form" method="post" action="/core/register">
+                {% csrf_token %}
+                <div class="tab-content">
+                     <div class="tab-pane active" role="tabpanel" id="step1">
+                        <h3>Step 1</h3>
+                        <p>This is step 1</p>
+						<div class="form-group">
+                            <div class="col-sm-9">
+                            {{form.as_p}}
+                            </div>
+                </div>
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">I accept Terms and Conditions</input>
+                            </label>
+                        </div>
+                        </div>
+
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step2">
+                        <h3>Step 2</h3>
+                        <p>This is step 2</p>
+						<div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="userName" placeholder="User Name" class="form-control" autofocus required>
+                        <span class="help-block">User Name, eg: Sampath, Virat</span>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" class="form-control" autofocus required>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step3">
+                        <h3>Step 3</h3>
+                        <p>This is step 3</p>
+						<div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="userName" placeholder="User Name" class="form-control" autofocus required>
+                        <span class="help-block">User Name, eg: Sampath, Virat</span>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" class="form-control" autofocus required>
+                    </div>
+                </div>
+       <div class="form-group">
+                    <label for="middleName" class="col-sm-3 control-label">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                            <li><button type="button" class="btn btn-default next-step">Skip</button></li>
+                            <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="complete">
+                        <h3>Complete</h3>
+                        <p>You have successfully completed all steps.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+   </div>
+</div>
+{%  endblock %}

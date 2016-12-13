@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div ng-controller="eventView" class="container" style ="height:95%" data-something={{ id }}>
+      <div class="container">
+	<div class="row">
+	  <ul class="timeline">
+<li ng-repeat="event in myEvents">
+        <div class="timeline-badge">
+          <a><i class="fa fa-circle" id=""></i></a>
+        </div>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <h4><a href='core/register/eventPlayerView/{[{ event.id }]}'>{[{ event.name }]}</a></h4>
+            </div>
+            <div class="timeline-body">
+                <p>{[{ event.desc }]}</p>
+                <p>Event owner: {[{ event.owner.first_name }]}</p>
+                <p>Sport: {[{ event.name }]}</p>
+                <p>Number of Players: {[{ event.numberOfPlayers }]}</p>
+                <p>Event Location: {[{ event.location.country }]},{[{ event.location.state }]},{[{ event.location.region }]}</p>
+            </div>
+            <div class="timeline-footer">
+                <p class="text-right">{[{ event.startDate }]}</p>
+            </div>
+        </div>
+    </li>
+          <li class="clearfix no-float"></li>
+</ul>
+	</div>
+          </div>
+</div>
+
+{% endblock %}

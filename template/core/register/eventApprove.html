@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <h1 align="center" style="font-style: italic;font-weight: 900;color:darkslategrey">Approve/Reject Requests</h1>
+    <div ng-controller="approveControl" class="container">
+        <div class="row">
+            {% if users %}
+                {% for user in users %}
+                    {% for eventPlayer in eventPlayers %}
+                        {% if eventPlayer.approvalStatus == 'U' %}
+                        <div class="col-sm-8 well well-lg">
+                            {% if eventPlayer.players_id == user.id %}
+                                <p><b>Event Name: {{ eventPlayer.eventName }}</b></p>
+                                <p><b>Player First Name: {{ user.first_name }}</b></p>
+                                <p><b>Player Last Name: {{ user.last_name }}</b></p>
+                                <p><b>Player UserName: {{ user.username }}</b></p>
+                                <button id="approve{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"approve") class="btn btn-primary btn-lg btn-success">Accept</button>
+                                <button id="reject{{ eventPlayer.id }}" ng-click=submit('{{ eventPlayer.id }}',"reject") class="btn btn-primary btn-lg btn-danger">Reject</button>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div class="jumbotron"><h2 align="center"> There are no event requests!!</h2></div>
+            {% endif %}
+        </div>
+        <hr>
+        <div class="row">
+            {% if users %}
+                {% for user in users %}
+                    {% for eventPlayer in eventPlayers %}
+                        {% if eventPlayer.approvalStatus == 'A' %}
+                        <div class="col-sm-8 well well-lg">
+                            {% if eventPlayer.players_id == user.id %}
+                                <p><b>Event Name: {{ eventPlayer.eventName }}</b></p>
+                                <p><b>Player First Name: {{ user.first_name }}</b></p>
+                                <p><b>Player Last Name: {{ user.last_name }}</b></p>
+                                <p><b>Player UserName: {{ user.username }}</b></p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div class="jumbotron"><h2 align="center"> There are no event requests!!</h2></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
