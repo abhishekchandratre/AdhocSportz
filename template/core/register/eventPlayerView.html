@@ -21,38 +21,41 @@
             </ul>
         </div>
     </div>
-    <div class="container" class="jumbotron">
+    <div class="container">
         <b>Comments:</b></br>
-    <table class="table-bordered">
-        {% get_comment_list for event as comment_list %}
-        {% for comment in comment_list %}
-            <tr>
-                <td>{{ comment.user_name }}</td>
-                <td>{{ comment.comment }} </td>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
+                <table class="table-bordered">
+                    {% get_comment_list for event as comment_list %}
+                    {% for comment in comment_list %}
+                    <tr>
+                                <td><img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar"></td>
+                                <td><h4 class="user"> {{ comment.user_name }}:</h4></td>
+                                <td>{{comment.comment }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
     </br><hr>
 
-    <div class="container" class="jumbotron">
+    <div class="container">
     <b>Comment Here:</b></br>
 {#    {% render_comment_form for evernt %}#}
     {%  get_comment_form for event as form %}
     <table>
         <form action="{% comment_form_target %}" method="post">
             {% csrf_token %}
-            <div class="jumbotron">
             {{ form.comment }}
-            </div>
             {{ form.honeypot }}
             {{ form.content_type }}
             {{ form.object_pk }}
             {{ form.timestamp }}
             {{ form.security_hash }}
             <input type="hidden" name="next" value="{% url 'eventPlayerView' event.id %}" /></br>
-            <input type="submit" value="Add comment" id="id_submit"  class="btn btn-primary btn-lg" />
+            <input type="submit" value="Add comment" id="id_submit"  class="btn btn-primary btn-block" />
         </form>
     </table>
     </div>
 {% endblock %}
+
+
+
+

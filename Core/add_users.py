@@ -11,11 +11,11 @@ def create_user_with_all_details(request):
     subprocess.call("./scripts/repace_db.sh")
 
     # Creating Location
-    location1 = Location.objects.create(country='India', state='MH',region='Pune')
+    location1 = Location.objects.create(country='United States', state='NC',region='Mooresville')
     location1.save()
     location2 = Location.objects.create(country='United States', state='NC',region='Charlotte')
     location2.save()
-    location3 = Location.objects.create(country='United States', state='FL',region='Maimi')
+    location3 = Location.objects.create(country='United States', state='NC',region='Asheville')
     location3.save()
 
     User = get_user_model()
